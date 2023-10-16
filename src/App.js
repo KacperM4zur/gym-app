@@ -5,12 +5,14 @@ import Home from "./Components/HomePage/Home";
 
 
 function App() {
-  return (
-    <div>
-        <LoginSignup/>
-        <Home/>
-    </div>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route path="/login" element={<LoginSignup />} />
+                <Route path="/" element={<Home />} />
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;
