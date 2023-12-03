@@ -8,7 +8,7 @@ import Contact from "./Components/Contact/Contact"
 function App() {
     return (
         <Router>
-            <Menu /> {/* Dodaj komponent Menu na samej górze aplikacji */}
+            <Menu /> {/* Dodaj komponent Menu na samej górze aplikacji qweq*/}
             <Routes>
                 <Route path="/login" element={<LoginSignup />} />
                 <Route path="/" element={<Home />} />
