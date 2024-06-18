@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/exercises-group', [ExercisesGroupController::class, 'index']);
+    Route::get('/exercises-group/edit/{id?}', [ExercisesGroupController::class, 'edit']);
 });
 
 Route::middleware('guest')->group(function () {
