@@ -10,4 +10,13 @@ class ExercisesGroup extends Model
     protected $table = 'exercises_group';
     protected $guarded = ['id'];
     use HasFactory;
+
+    public function rules(){
+        return [
+            'name' => 'required',
+            'description' => 'required',
+            'image' => 'required'
+        ];
+    }
+
 }

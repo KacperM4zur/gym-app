@@ -4,15 +4,15 @@
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">Panel główny</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">Administrator</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Komunikacja</a>
-        </li>
+{{--        <li class="nav-item d-none d-sm-inline-block">--}}
+{{--            <a href="index3.html" class="nav-link">Panel główny</a>--}}
+{{--        </li>--}}
+{{--        <li class="nav-item d-none d-sm-inline-block">--}}
+{{--            <a href="index3.html" class="nav-link">Administrator</a>--}}
+{{--        </li>--}}
+{{--        <li class="nav-item d-none d-sm-inline-block">--}}
+{{--            <a href="#" class="nav-link">Komunikacja</a>--}}
+{{--        </li>--}}
     </ul>
 
     <!-- Right navbar links -->

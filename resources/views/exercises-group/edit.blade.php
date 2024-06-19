@@ -2,15 +2,16 @@
     <div id="form-container" class="flex flex-col justify-start items-center text-white py-12 px-4 sm:px-6 lg:px-8">
         <div class="w-full max-w-4xl bg-dark shadow-lg rounded-lg p-8 mt-8">
             <h3 class="text-3xl font-bold mb-8 text-left">Dodaj grupę ćwiczeń</h3>
-            <form method="POST" action="{{}}">
+            <form method="POST">
+                @csrf
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div class="form-group">
                         <label for="name" class="block text-sm font-medium text-gray-300">Nazwa</label>
-                        <input type="text" name="name" id="name" class="mt-1 block w-full border-gray-600 rounded-md shadow-sm focus:border-gray-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-700 text-white py-2 px-3" placeholder="Wprowadź nazwę" required>
+                        <input type="text" name="name" value="{{ $group->name }}" id="name" class="mt-1 block w-full border-gray-600 rounded-md shadow-sm focus:border-gray-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-700 text-white py-2 px-3" placeholder="Wprowadź nazwę" required>
                     </div>
                     <div class="form-group sm:col-span-2">
                         <label for="description" class="block text-sm font-medium text-gray-300">Opis</label>
-                        <textarea name="description" id="description" rows="3" class="mt-1 block w-full border-gray-600 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-700 text-white py-2 px-3" placeholder="Wprowadź opis" required></textarea>
+                        <textarea name="description"  id="description" rows="3" class="mt-1 block w-full border-gray-600 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-700 text-white py-2 px-3" placeholder="Wprowadź opis" required>{{ $group->description }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="image" class="block text-sm font-medium text-gray-300">Wybierz obraz</label>
@@ -19,7 +20,7 @@
                     <div class="form-group">
                         <label for="status" class="block text-sm font-medium text-gray-300">Status</label>
                         <div class="mt-1 flex items-center space-x-2">
-                            <input type="checkbox" name="status" id="status" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded">
+                            <input type="checkbox" name="status" id="status" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded" {{ $group->status ? 'checked' : '' }}>
                             <label for="status" class="block text-sm text-gray-300">Aktywny</label>
                         </div>
                     </div>
