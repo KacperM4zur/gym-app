@@ -25,8 +25,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/exercises-group', [ExercisesGroupController::class, 'index'])->name('exercises-group.index');
-    Route::match(['get', 'post'],'/exercises-group/edit/{id?}', [ExercisesGroupController::class, 'edit'])->name('exercises-group.edit');
+    Route::name('exercises-group.')
+        ->prefix('exercises-group')
+        ->group(function (){
+            Route::get('/', [ExercisesGroupController::class, 'index'])->name('index');
+            Route::match(['get', 'post'],'/edit/{id?}', [ExercisesGroupController::class, 'edit'])->name('edit');
+            Route::delete('/delete/{id}', [ExercisesGroupController::class, 'delete'])->name('delete');
+        });
+
 });
 
 Route::middleware('guest')->group(function () {

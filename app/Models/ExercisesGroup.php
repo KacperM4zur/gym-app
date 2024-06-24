@@ -15,7 +15,7 @@ class ExercisesGroup extends Model
         return [
             'name' => 'required',
             'description' => 'required',
-            'image' => 'required'
+            'image_path' => 'required'
         ];
     }
 

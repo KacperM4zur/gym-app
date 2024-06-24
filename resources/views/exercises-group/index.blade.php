@@ -3,9 +3,9 @@
         <div class="text-white">
             Lorem Ipsum to po prostu fikcyjny tekst branży poligraficznej i składu.
         </div>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" onclick="{{ route('exercises-group.edit') }}">
+        <a href="{{ route('exercises-group.edit') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
             Stwórz
-        </button>
+        </a>
     </div>
 
     <div class="overflow-x-auto">
@@ -26,13 +26,15 @@
                 <tr>
                     <td class="py-2 px-4 border-b">{{ $group->name }}</td>
                     <td class="py-2 px-4 border-b">{{ $group->description }}</td>
-                    <td class="py-2 px-4 border-b"><img src="{{ $group->image_path }}" alt="{{ $group->name }}" class="w-16 h-16"></td>
+                    <td class="py-2 px-4 border-b"><img src="{{ asset("storage/public/$group->image_path") }}" alt="{{ $group->name }}" class="w-16 h-16"></td>
                     <td class="py-2 px-4 border-b">{{ $group->status == 1 ? 'Aktywny' : 'Nieaktywny'}}</td>
                     <td class="py-2 px-4 border-b">{{ $group->created_at }}</td>
                     <td class="py-2 px-4 border-b">{{ $group->updated_at }}</td>
                     <td class="py-2 px-4 border-b">
                         <a href="{{ route('exercises-group.edit', ['id'=>$group->getKey()]) }}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700 mr-2">Edycja</a>
-                        <form action="" method="POST" style="display:inline;">
+                        <form action="{{ route('exercises-group.delete', ['id'=>$group->getKey()]) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
                             <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Usuń</button>
                         </form>
                     </td>

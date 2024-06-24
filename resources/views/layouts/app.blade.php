@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/dark.css') }}">
+
 </head>
 <body class="hold-transition dark-mode layout-fixed">
 <div class="wrapper">
@@ -73,6 +75,38 @@
 <script src="{{ asset('plugins/jquery-mapael/maps/usa_states.min.js') }}"></script>
 <!-- ChartJS -->
 <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
+
+
+
+
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function (){
+        // Swal.fire({
+        //     position: "top-end",
+        //     icon: "success",
+        //     title: "Test",
+        //     showConfirmButton: false,
+        //     timer: 2500,
+        //     toast: true
+        // });
+        @foreach(['success', 'error', 'warning', 'info'] as $alert)
+            @if(session()->has($alert))
+                @foreach(session()->get($alert, []) as $message)
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "{{ $alert }}",
+                        title: "{{ $message }}",
+                        showConfirmButton: false,
+                        timer: 2500,
+                        toast: true
+                    });
+                @endforeach
+            @endif
+        @endforeach
+    })
+</script>
 
 </body>
 </html>
