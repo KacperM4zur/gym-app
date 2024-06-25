@@ -15,7 +15,7 @@ class ExercisesGroup extends Model
         return [
             'name' => 'required',
             'description' => 'required',
-            'image_path' => 'required'
+            'image_path' => $this->image_path ? '' : 'required'
         ];
     }
 

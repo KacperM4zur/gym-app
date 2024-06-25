@@ -20,12 +20,12 @@
                     </div>
                     <div class="form-group">
                         <label for="image_path" class="block text-sm font-medium text-gray-300">Wybierz obraz</label>
-                        <input type="file" name="image_path" id="image_path" class="mt-1 block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
+                        <input type="file" name="image_path" id="image_path" class="mt-1 block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     </div>
                     @if($group->image_path)
                         <span>
                         <img src="{{ asset("storage/public/$group->image_path") }}" alt="{{ $group->name }}" class="w-32 h-32">
-                    </span>
+                        </span>
                     @endif
 
                     <x-checkbox name="Aktywny" :value="$group->status" field="status" />

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ExercisesGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ExercisesGroupController extends Controller
 {
@@ -16,6 +17,7 @@ class ExercisesGroupController extends Controller
 
     public function edit($id=0) {
         $group = ExercisesGroup::findOrNew($id);
+        $isNew = !$group->exists;
         if(request()->isMethod('post')){
             $post = request()->all();
             $redirect = redirect()->route('exercises-group.edit', [
@@ -26,13 +28,18 @@ class ExercisesGroupController extends Controller
             if($validator->passes()){
                 DB::beginTransaction();
                 try {
+
                     $group->fill($post);
                     if(request()->hasFile('image_path')){
+                        if ($group->image_path) {
+                            Storage::delete('public/' . $group->image_path);
+                        }
                         $file = request()->file('image_path');
                         $filename = $file->getClientOriginalName();
                         $group->image_path = $filename;
                         $file->storeAs('public/',$filename);
                     }
+
                     $group->save();
                     DB::commit();
                 }
@@ -42,8 +49,8 @@ class ExercisesGroupController extends Controller
                     return $redirect->with('error', ["{$exception->getMessage()}"]);
                 }
 
-                return $redirect->with('success', [$group->getKey() ? 'Pomyślnie edytowano ' . $group->name : 'Pomyślnie dodano ' . $group->name]);
-            }
+                $message = $isNew ? 'Pomyślnie dodano ' . $group->name : 'Pomyślnie edytowano ' . $group->name;
+                return $redirect->with('success', [$message]);            }
 
             return $redirect->with('error', $validator->getMessageBag()->all());
         }
@@ -54,6 +61,11 @@ class ExercisesGroupController extends Controller
 
     public function delete($id=0){
         $group = ExercisesGroup::findOrFail($id);
+
+        if ($group->image_path) {
+            Storage::delete('public/' . $group->image_path);
+        }
+
         $group->delete();
 
         return redirect()->route('exercises-group.index')->with('success', ["Usunięto $group->name"]);
