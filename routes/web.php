@@ -32,6 +32,13 @@ Route::middleware('auth')->group(function () {
             Route::match(['get', 'post'],'/edit/{id?}', [ExercisesGroupController::class, 'edit'])->name('edit');
             Route::delete('/delete/{id}', [ExercisesGroupController::class, 'delete'])->name('delete');
         });
+    Route::name('exercises.')
+        ->prefix('exercises')
+        ->group(function (){
+            Route::get('/', [ExerciseController::class, 'index'])->name('index');
+            Route::match(['get', 'post'],'/edit/{id?}', [ExerciseController::class, 'edit'])->name('edit');
+            Route::delete('/delete/{id}', [ExerciseController::class, 'delete'])->name('delete');
+        });
 
 });
 
