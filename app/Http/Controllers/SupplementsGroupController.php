@@ -20,9 +20,7 @@ class SupplementsGroupController extends Controller
         $isNew = !$group->exists;
         if(request()->isMethod('post')){
             $post = request()->all();
-            $redirect = redirect()->route('supplements-group.edit', [
-                'id' => $group->getKey()
-            ]);
+            $redirect = redirect()->route('supplements-group.index');
 
             $validator = validator($post, $group->rules());
             if($validator->passes()){

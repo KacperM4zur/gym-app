@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary flex flex-col">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="{{route('dashboard')}}" class="brand-link">
         <span class="brand-text font-weight-light">GymApp</span>
     </a>
 
@@ -8,7 +8,7 @@
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
             <div class="info mb-2">
-                <a href="#" class="d-block">Administrator</a>
+                <a href="{{route('profile.edit')}}" class="d-block">Administrator</a>
             </div>
 
 {{--        <!-- SidebarSearch Form -->--}}
@@ -27,7 +27,7 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+            <a href="{{route('dashboard')}}" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                     Panel główny

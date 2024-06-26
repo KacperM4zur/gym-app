@@ -26,9 +26,7 @@ class ExerciseController extends Controller
 
         if (request()->isMethod('post')) {
             $post = request()->all();
-            $redirect = redirect()->route('exercises.edit', [
-                'id' => $exercise->getKey()
-            ]);
+            $redirect = redirect()->route('exercises.index');
 
             $validator = validator($post, $exercise->rules());
             if ($validator->passes()) {

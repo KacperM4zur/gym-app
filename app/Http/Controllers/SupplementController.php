@@ -22,9 +22,7 @@ class SupplementController extends Controller
         $supplementsGroups = SupplementsGroup::all();
         if(request()->isMethod('post')){
             $post = request()->all();
-            $redirect = redirect()->route('supplements.edit', [
-                'id' => $supplement->getKey()
-            ]);
+            $redirect = redirect()->route('supplements.index');
 
             $validator = validator($post, $supplement->rules());
             if($validator->passes()){
