@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Customer;
-use http\Env\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Exception;
 
 class CustomerController extends Controller
 {
-    public function register(){
+    public function register()
+    {
         $post = request()->only([
             'name',
             'email',
@@ -21,7 +21,7 @@ class CustomerController extends Controller
             'email' => 'required|email|string|unique:customers,email',
             'password' => 'required|string'
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
         DB::beginTransaction();
@@ -31,8 +31,7 @@ class CustomerController extends Controller
             $customer->generateApiToken();
             $customer->save();
             DB::commit();
-        }
-        catch (\Exception $exception){
+        } catch (Exception $exception) {
             DB::rollBack();
             return response()->json($exception->getMessage(), 400);
         }
