@@ -85,6 +85,18 @@
                         <p>Grupy ćwiczeń</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('supplements-group.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Grupy suplementów</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('supplements.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Suplementy</p>
+                    </a>
+                </li>
 {{--                <li class="nav-item">--}}
 {{--                    <a href="pages/tables/jsgrid.html" class="nav-link">--}}
 {{--                        <i class="far fa-circle nav-icon"></i>--}}

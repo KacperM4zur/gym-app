@@ -39,7 +39,20 @@ Route::middleware('auth')->group(function () {
             Route::match(['get', 'post'],'/edit/{id?}', [ExerciseController::class, 'edit'])->name('edit');
             Route::delete('/delete/{id}', [ExerciseController::class, 'delete'])->name('delete');
         });
-
+    Route::name('supplements-group.')
+        ->prefix('supplements-group')
+        ->group(function (){
+            Route::get('/', [SupplementsGroupController::class, 'index'])->name('index');
+            Route::match(['get', 'post'],'/edit/{id?}', [SupplementsGroupController::class, 'edit'])->name('edit');
+            Route::delete('/delete/{id}', [SupplementsGroupController::class, 'delete'])->name('delete');
+        });
+    Route::name('supplements.')
+        ->prefix('supplements')
+        ->group(function (){
+            Route::get('/', [SupplementController::class, 'index'])->name('index');
+            Route::match(['get', 'post'],'/edit/{id?}', [SupplementController::class, 'edit'])->name('edit');
+            Route::delete('/delete/{id}', [SupplementController::class, 'delete'])->name('delete');
+        });
 });
 
 Route::middleware('guest')->group(function () {
