@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Customer;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 
@@ -40,5 +42,48 @@ class CustomerController extends Controller
             'message' => 'Klient pomyślnie zarejestrowany',
             'customer' => $customer->toArray()
         ]);
+    }
+
+    public function login(){
+
+        $post = request()->only([
+           'email',
+           'password'
+        ]);
+
+        $validator = Validator::make($post, [
+            'email' => 'required|email|string',
+            'password' => 'required|string'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $customer = $this->attempt($post);
+        if(!$customer){
+            return response()->json([
+                'status' => 401,
+                'message' => 'Klient niezalogowany',
+                'customer' => []
+            ]);
+        }
+        $customer->generateApiToken();
+        $customer->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Klient zalogowany',
+            'customer' => $customer->toArray()
+        ]);
+    }
+
+
+
+    private function attempt(array $credentials): ?Customer {
+        $customer = Customer::where('email', '=', $credentials['email'])->first();
+        if($customer){
+            return Hash::check($credentials['password'], $customer->password) ? $customer : null;
+
+        }
+        return null;
     }
 }

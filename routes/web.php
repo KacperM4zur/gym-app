@@ -14,7 +14,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
@@ -52,6 +52,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [SupplementController::class, 'index'])->name('index');
             Route::match(['get', 'post'],'/edit/{id?}', [SupplementController::class, 'edit'])->name('edit');
             Route::delete('/delete/{id}', [SupplementController::class, 'delete'])->name('delete');
+        });
+    Route::name('customers.')
+        ->prefix('customers')
+        ->group(function (){
+            Route::get('/', [CustomerController::class, 'index'])->name('index');
+            Route::match(['get', 'post'],'/edit/{id?}', [CustomerController::class, 'edit'])->name('edit');
+            Route::delete('/delete/{id}', [CustomerController::class, 'delete'])->name('delete');
         });
 });
 

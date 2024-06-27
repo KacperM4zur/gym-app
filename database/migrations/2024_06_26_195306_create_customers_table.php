@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('role_id')->default(0);
             $table->string('name');
             $table->string('email')->unique();
             $table->string('email_verified_at')->nullable();

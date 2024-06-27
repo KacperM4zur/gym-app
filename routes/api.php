@@ -13,3 +13,4 @@ Route::get('/supplements', [SupplementController::class, 'getterSupplements']);
 Route::get('/supplements-group', [SupplementsGroupController::class, 'getterSupplementsGroup']);
 
 Route::post('/register', [CustomerController::class, 'register']);
+Route::post('/login', [CustomerController::class, 'login']);

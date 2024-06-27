@@ -17,10 +17,22 @@ class Customer extends User
 //        'remember_token'
 //    ];
 
+    public function rules() {
+        return [
+            'name' => 'required|string|unique:customers,name,' . $this->id,
+            'email' => 'required|email|string|unique:customers,email,' . $this->id,
+            'role_id' => 'required|exists:roles,id',
+        ];
+    }
+
     public function generateApiToken(){
         $this->api_token = Str::random(60);
         return $this->api_token;
     }
 
+    public function role()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
 
 }
