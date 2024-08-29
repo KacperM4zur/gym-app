@@ -32,7 +32,7 @@ class Customer extends User
 
     public function role()
     {
-        return $this->belongsTo(Customer::class, 'customer_id');
+        return $this->belongsTo(Role::class, 'role_id','id');
     }
 
 }

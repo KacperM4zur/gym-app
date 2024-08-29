@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CustomerController extends Controller
 {
@@ -18,6 +19,13 @@ class CustomerController extends Controller
     }
 
     public function edit($id = 0) {
+//        Customer::create([
+//            'name' => "kamiltestuje",
+//            'email' => "kamil@o2.pl",
+//            'password' => "test1",
+//            'api_token' => Str::random(60),
+//            'role_id' => 1
+//        ]);
         $customer = Customer::findOrNew($id);
         $roles = Role::all();
         $isNew = !$customer->exists;
