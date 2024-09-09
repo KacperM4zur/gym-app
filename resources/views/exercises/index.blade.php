@@ -33,13 +33,16 @@
                     <td class="py-2 px-4 border-b">{{ $exercise->created_at }}</td>
                     <td class="py-2 px-4 border-b">{{ $exercise->updated_at }}</td>
                     <td class="py-2 px-4 border-b">
-                        <a href="{{ route('exercises.edit', ['id'=>$exercise->getKey()]) }}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700 mr-2">Edycja</a>
-                        <form action="{{ route('exercises.delete', ['id'=>$exercise->getKey()]) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Usuń</button>
-                        </form>
+                        <div class="flex flex-col sm:flex-row sm:space-x-2 space-y-4 sm:space-y-0">
+                            <a href="{{ route('exercises.edit', ['id'=>$exercise->getKey()]) }}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700">Edycja</a>
+                            <form action="{{ route('exercises.delete', ['id'=>$exercise->getKey()]) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Usuń</button>
+                            </form>
+                        </div>
                     </td>
+
                 </tr>
             @endforeach
             </tbody>
