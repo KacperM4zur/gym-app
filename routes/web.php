@@ -60,6 +60,14 @@ Route::middleware('auth')->group(function () {
             Route::match(['get', 'post'],'/edit/{id?}', [CustomerController::class, 'edit'])->name('edit');
             Route::delete('/delete/{id}', [CustomerController::class, 'delete'])->name('delete');
         });
+    Route::name('roles.')
+        ->prefix('roles')
+        ->group(function () {
+            Route::get('/', [RoleController::class, 'index'])->name('index');
+            Route::match(['get', 'post'], '/edit/{id?}', [RoleController::class, 'edit'])->name('edit');
+            Route::delete('/delete/{id}', [RoleController::class, 'delete'])->name('delete');
+        });
+
 });
 
 Route::middleware('guest')->group(function () {
