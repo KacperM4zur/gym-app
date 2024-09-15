@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Customer;
+use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -32,6 +33,7 @@ class CustomerController extends Controller
             $customer->fill($post);
             $customer->generateApiToken();
             $customer->save();
+
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
