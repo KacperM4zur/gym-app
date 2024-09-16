@@ -10,12 +10,12 @@ use App\Models\WorkoutPlanDay;
 
 class WorkoutPlanService
 {
-    public function createWorkoutPlan(array $workoutPlan, ?Customer $customer): WorkoutPlan
+    public function createWorkoutPlan(array $workoutPlanData, ?Customer $customer): WorkoutPlan
     {
-        $workoutPlan = WorkoutPlan::create(['name' => $workoutPlan['workoutPlanName'], 'customer_id' => $customer->id]);
-        $days = Day::whereIn('number', array_column($workoutPlan['plan'], 'day_of_week'))->get();
+        $workoutPlan = WorkoutPlan::create(['name' => $workoutPlanData['workoutPlanName'], 'customer_id' => $customer->id]);
+        $days = Day::whereIn('number', array_column($workoutPlanData['plan'], 'day_of_week'))->get();
 
-        foreach ($workoutPlan['plan'] as $plan) {
+        foreach ($workoutPlanData['plan'] as $plan) {
             $dayPlan = WorkoutPlanDay::create(['workout_plan_id' => $workoutPlan->id, 'day_id' => $days->firstWhere('id', '=', $plan['day_of_week'])->id]);
 
             $exercises = array_map(function ($exercise) use ($dayPlan) {
