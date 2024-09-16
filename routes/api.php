@@ -14,3 +14,5 @@ Route::get('/supplements-group', [SupplementsGroupController::class, 'getterSupp
 
 Route::post('/register', [CustomerController::class, 'register']);
 Route::post('/login', [CustomerController::class, 'login']);
+
+Route::post('/create-workout-plan', [WorkoutPlanController::class, 'createWorkoutPlan']);
