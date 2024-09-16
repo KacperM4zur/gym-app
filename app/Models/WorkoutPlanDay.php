@@ -16,4 +16,9 @@ class WorkoutPlanDay extends Model
     {
         return $this->hasMany(ExercisePlanDay::class, 'workout_plan_day_id', 'id');
     }
+
+    public function day()
+    {
+        return $this->belongsTo(Day::class, 'day_id', 'id');
+    }
 }

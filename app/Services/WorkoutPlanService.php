@@ -7,6 +7,7 @@ use App\Models\Day;
 use App\Models\ExercisePlanDay;
 use App\Models\WorkoutPlan;
 use App\Models\WorkoutPlanDay;
+use Illuminate\Support\Collection;
 
 class WorkoutPlanService
 {
@@ -29,7 +30,21 @@ class WorkoutPlanService
         return $workoutPlan;
     }
 
-    public function getWorkoutPlan() {
-        return 0;
+    public function getWorkoutPlan(): Collection {
+        return WorkoutPlan::with(['workoutDays.workoutExercises'])
+            ->get()
+            ->map(fn($workoutPlan) => [
+                'name' => $workoutPlan->name,
+                'plan' => $workoutPlan->workoutDays->map(fn($workoutDay) => [
+                    'day' => $workoutDay->day->name,
+                    'exercises' => $workoutDay->workoutExercises->map(fn($workoutDayExercise) => [
+                        'name' => $workoutDayExercise->exercise->name,
+                        'sets' => $workoutDayExercise->sets,
+                        'reps' => $workoutDayExercise->reps,
+                        'weight' => $workoutDayExercise->weight,
+                        'break' => $workoutDayExercise->break
+                    ])->toArray()
+                ])->toArray()
+            ]);
     }
 }
