@@ -17,3 +17,5 @@ Route::post('/login', [CustomerController::class, 'login']);
 
 Route::post('/create-workout-plan', [WorkoutPlanController::class, 'createWorkoutPlan']);
 Route::get('/workout-plans', [WorkoutPlanController::class, 'getWorkoutPlan']);
+
+Route::get('/days', [DayController::class, 'getDays']);
