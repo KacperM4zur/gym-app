@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\ExercisesGroup;
+use App\Models\Exercise;
+
 
 class ExerciseController extends Controller
 {
     public function getterExercises(){
-        $exercises = ExercisesGroup::where('status', '=', '1')->get()->toArray();
+        $exercises = Exercise::where('status', '=', '1')->get()->toArray();
         return response()->json($exercises);
     }
 }

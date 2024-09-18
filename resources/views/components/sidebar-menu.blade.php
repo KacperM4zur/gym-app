@@ -109,6 +109,18 @@
                         <p>Suplementy</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('days.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Dni</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('workout-plans.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Plany treningowe</p>
+                    </a>
+                </li>
 {{--                <li class="nav-item">--}}
 {{--                    <a href="pages/tables/jsgrid.html" class="nav-link">--}}
 {{--                        <i class="far fa-circle nav-icon"></i>--}}

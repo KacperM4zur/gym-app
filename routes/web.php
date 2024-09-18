@@ -74,6 +74,12 @@ Route::middleware('auth')->group(function () {
             Route::match(['get', 'post'], '/edit/{id?}', [DayController::class, 'edit'])->name('edit');
             Route::delete('/delete/{id}', [DayController::class, 'delete'])->name('delete');
         });
+    Route::name('workout-plans.')
+        ->prefix('workout-plans')
+        ->group(function () {
+            Route::get('/', [WorkoutPlanController::class, 'index'])->name('index');
+            Route::get('/{id}', [WorkoutPlanController::class, 'show'])->name('show');
+        });
 
 });
 

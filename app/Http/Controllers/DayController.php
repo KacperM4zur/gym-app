@@ -30,6 +30,8 @@ class DayController extends Controller
                     'required',
                     'integer',
                     Rule::unique('days', 'number')->ignore($day->id),
+                    'min:1',
+                    'max:7'
                 ],
             ]);
 
@@ -57,10 +59,10 @@ class DayController extends Controller
             'day' => $day
         ]);
     }
-    public function delete($id = 0) {
-        $day = Day::findOrFail($id);
-        $day->delete();
-
-        return redirect()->route('days.index')->with('success', ["Usunięto $day->name"]);
-    }
+//    public function delete($id = 0) {
+//        $day = Day::findOrFail($id);
+//        $day->delete();
+//
+//        return redirect()->route('days.index')->with('success', ["Usunięto $day->name"]);
+//    }
 }

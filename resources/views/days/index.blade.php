@@ -29,11 +29,11 @@
                     <td class="py-2 px-4 border-b">
                         <div class="flex flex-col sm:flex-row sm:space-x-2 space-y-4 sm:space-y-0">
                             <a href="{{ route('days.edit', ['id' => $day->id]) }}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700">Edycja</a>
-                            <form action="{{ route('days.delete', ['id'=>$day->getKey()]) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Usuń</button>
-                            </form>
+{{--                            <form action="{{ route('days.delete', ['id'=>$day->getKey()]) }}" method="POST" style="display:inline;">--}}
+{{--                                @csrf--}}
+{{--                                @method('DELETE')--}}
+{{--                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Usuń</button>--}}
+{{--                            </form>--}}
                         </div>
                     </td>
                 </tr>

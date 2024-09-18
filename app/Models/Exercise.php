@@ -23,6 +23,6 @@ class Exercise extends Model
 
     public function exercisesGroup()
     {
-        return $this->belongsTo(ExercisesGroup::class, 'exercises_group_id');
+        return $this->belongsTo(ExercisesGroup::class, 'exercises_group_id', 'idś');
     }
 }
