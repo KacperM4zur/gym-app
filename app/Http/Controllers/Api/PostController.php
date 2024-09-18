@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Post\PostStoreRequest;
 use App\Http\Requests\Post\PostUpdateRequest;
+use App\Http\Resources\PostResource;
 use App\Services\PostService;
 
 class PostController extends Controller
@@ -25,7 +26,7 @@ class PostController extends Controller
         return response()->json([
             'status' => 200,
             'message' => 'SUCCESS',
-            'data' => $data->toArray()
+            'data' => PostResource::collection($data)
         ]);
     }
 

@@ -9,7 +9,7 @@ class PostService
 {
     public function getPosts(): Collection
     {
-        return Post::with(['customer', 'comments.customer'])->get();
+        return Post::with(['customer'])->get();
     }
 
     public function createPost($data): Post
