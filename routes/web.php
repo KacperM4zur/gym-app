@@ -67,6 +67,13 @@ Route::middleware('auth')->group(function () {
             Route::match(['get', 'post'], '/edit/{id?}', [RoleController::class, 'edit'])->name('edit');
             Route::delete('/delete/{id}', [RoleController::class, 'delete'])->name('delete');
         });
+    Route::name('days.')
+        ->prefix('days')
+        ->group(function () {
+            Route::get('/', [DayController::class, 'index'])->name('index');
+            Route::match(['get', 'post'], '/edit/{id?}', [DayController::class, 'edit'])->name('edit');
+            Route::delete('/delete/{id}', [DayController::class, 'delete'])->name('delete');
+        });
 
 });
 
