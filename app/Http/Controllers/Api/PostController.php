@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Post\PostStoreRequest;
 use App\Http\Requests\Post\PostUpdateRequest;
+use App\Http\Resources\OnePostResource;
 use App\Http\Resources\PostResource;
 use App\Services\PostService;
 
@@ -54,7 +55,9 @@ class PostController extends Controller
         return response()->json([
             'status' => 200,
             'message' => 'SUCCESS',
-            'data' => $data
+//            'data' => $data
+            'data' => new OnePostResource($data)  // Używamy resource'a bez ::collection(), bo zwracamy jeden post
+
         ]);
     }
 

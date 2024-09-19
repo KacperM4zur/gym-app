@@ -80,6 +80,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [WorkoutPlanController::class, 'index'])->name('index');
             Route::get('/{id}', [WorkoutPlanController::class, 'show'])->name('show');
         });
+    Route::name('posts.')
+        ->prefix('posts')
+        ->group(function () {
+            Route::get('/', [PostController::class, 'index'])->name('index');
+            Route::get('/{id}', [PostController::class, 'show'])->name('show');
+        });
+
 
 });
 

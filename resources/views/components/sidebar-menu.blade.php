@@ -121,6 +121,12 @@
                         <p>Plany treningowe</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('posts.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Posty</p>
+                    </a>
+                </li>
 {{--                <li class="nav-item">--}}
 {{--                    <a href="pages/tables/jsgrid.html" class="nav-link">--}}
 {{--                        <i class="far fa-circle nav-icon"></i>--}}
