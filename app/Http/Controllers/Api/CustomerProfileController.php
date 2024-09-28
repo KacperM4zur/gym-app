@@ -2,69 +2,66 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Post\PostStoreRequest;
-use App\Http\Requests\Post\PostUpdateRequest;
-use App\Http\Resources\OnePostResource;
-use App\Http\Resources\PostResource;
-use App\Services\PostService;
+use App\Http\Requests\Profile\CustomerProfileStoreRequest;
+use App\Http\Requests\Profile\CustomerProfileUpdateRequest;
+use App\Services\CustomerProfileService;
+use Illuminate\Http\Request;
 
-class PostController extends Controller
+class CustomerProfileController extends Controller
 {
-    private PostService $postService;
+    private CustomerProfileService $customerProfileService;
 
-    public function __construct(PostService $postService)
+    public function __construct(CustomerProfileService $customerProfileService)
     {
-        $this->postService = $postService;
+        $this->customerProfileService = $customerProfileService;
     }
 
     public function get()
     {
         try {
-            $data = $this->postService->getPosts();
+            $data = $this->customerProfileService->getCustomerProfiles();
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 400);
         }
         return response()->json([
             'status' => 200,
             'message' => 'SUCCESS',
-            'data' => PostResource::collection($data)
+            'data' => $data
         ]);
     }
 
-    public function store(PostStoreRequest $request)
+    public function store(CustomerProfileStoreRequest $request)
     {
         try {
-            $data = $this->postService->createPost($request->toArray());
+            $data = $this->customerProfileService->createCustomerProfile($request->toArray());
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 400);
         }
         return response()->json([
             'status' => 200,
             'message' => 'SUCCESS',
-            'data' => $data->toArray()
+            'data' => $data
         ]);
     }
 
     public function show($id)
     {
         try {
-            $data = $this->postService->showPost($id);
+            $data = $this->customerProfileService->showCustomerProfile($id);
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 400);
         }
         return response()->json([
             'status' => 200,
             'message' => 'SUCCESS',
-//            'data' => $data
-            'data' => new OnePostResource($data)
-
+            'data' => $data
         ]);
     }
 
-    public function update(PostUpdateRequest $request, $id)
+    public function update(CustomerProfileUpdateRequest $request, $id)
     {
         try {
-            $data = $this->postService->updatePost($request->toArray(), $id);
+            $data = $this->customerProfileService->updateCustomerProfile($request->toArray(), $id);
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 400);
         }
@@ -78,7 +75,7 @@ class PostController extends Controller
     public function delete($id)
     {
         try {
-            $data = $this->postService->deletePost($id);
+            $data = $this->customerProfileService->deleteCustomerProfile($id);
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 400);
         }

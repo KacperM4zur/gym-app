@@ -30,3 +30,11 @@ Route::prefix('/posts')->group(function () {
     Route::delete('/{id}', [PostController::class, 'delete']);
     Route::post('/{id}/comments', [CommentController::class, 'store']);
 });
+
+Route::prefix('customer-profiles')->group(function () {
+    Route::get('/', [CustomerProfileController::class, 'get']);
+    Route::post('/', [CustomerProfileController::class, 'store']);
+    Route::get('/{id}', [CustomerProfileController::class, 'show']);
+    Route::put('/{id}', [CustomerProfileController::class, 'update']);
+    Route::delete('/{id}', [CustomerProfileController::class, 'delete']);
+});

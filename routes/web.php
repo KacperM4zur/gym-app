@@ -86,6 +86,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [PostController::class, 'index'])->name('index');
             Route::get('/{id}', [PostController::class, 'show'])->name('show');
         });
+    Route::prefix('profiles')->group(function () {
+        Route::get('/', [CustomerProfileController::class, 'index'])->name('profiles.index');
+        Route::get('/{id}', [CustomerProfileController::class, 'show'])->name('profiles.show');
+    });
 
 
 });
