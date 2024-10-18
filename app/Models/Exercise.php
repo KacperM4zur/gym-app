@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Exercise extends Model
 {
@@ -21,8 +22,8 @@ class Exercise extends Model
         ];
     }
 
-    public function exercisesGroup()
+    public function exercisesGroup(): BelongsTo
     {
-        return $this->belongsTo(ExercisesGroup::class, 'exercises_group_id', 'idś');
+        return $this->belongsTo(ExercisesGroup::class, 'exercises_group_id', 'id');
     }
 }

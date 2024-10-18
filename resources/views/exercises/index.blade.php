@@ -14,6 +14,9 @@
             <tr>
                 <th class="py-2 px-4 border-b">Nazwa</th>
                 <th class="py-2 px-4 border-b">Opis</th>
+                <th class="py-2 px-4 border-b">Technika</th>
+                <th class="py-2 px-4 border-b">Wady</th>
+                <th class="py-2 px-4 border-b">Zalety</th>
                 <th class="py-2 px-4 border-b">Kategoria</th>
                 <th class="py-2 px-4 border-b">Zdjęcie</th>
                 <th class="py-2 px-4 border-b">Status</th>
@@ -27,6 +30,9 @@
                 <tr>
                     <td class="py-2 px-4 border-b">{{ $exercise->name }}</td>
                     <td class="py-2 px-4 border-b">{{ $exercise->description }}</td>
+                    <td class="py-2 px-4 border-b">{{ $exercise->technique }}</td>
+                    <td class="py-2 px-4 border-b">{{ $exercise->advantages }}</td>
+                    <td class="py-2 px-4 border-b">{{ $exercise->disadvantages }}</td>
                     <td class="py-2 px-4 border-b">{{ $exercise->exercisesGroup->name }}</td>
                     <td class="py-2 px-4 border-b"><img src="{{ asset("storage/public/$exercise->image_path") }}" alt="{{ $exercise->name }}" class="w-16 h-16"></td>
                     <td class="py-2 px-4 border-b">{{ $exercise->status == 1 ? 'Aktywny' : 'Nieaktywny'}}</td>

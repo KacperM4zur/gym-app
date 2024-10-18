@@ -29,6 +29,20 @@
                         <label for="description" class="block text-sm font-medium text-gray-300">Opis</label>
                         <textarea name="description" id="description" rows="3" class="mt-1 block w-full border-gray-600 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-700 text-white py-2 px-3" placeholder="Wprowadź opis" required>{{ $exercise->description }}</textarea>
                     </div>
+                    <div class="col-span-2">
+                        <label for="technique" class="block text-sm font-medium text-gray-300">Technika</label>
+                        <textarea name="technique" id="technique" rows="3" class="mt-1 block w-full border-gray-600 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-700 text-white py-2 px-3" placeholder="Opisz technikę">{{ $exercise->technique }}</textarea>
+                    </div>
+
+                    <div class="col-span-2">
+                        <label for="advantages" class="block text-sm font-medium text-gray-300">Zalety</label>
+                        <textarea name="advantages" id="advantages" rows="3" class="mt-1 block w-full border-gray-600 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-700 text-white py-2 px-3" placeholder="Wymień zalety">{{ $exercise->advantages }}</textarea>
+                    </div>
+
+                    <div class="col-span-2">
+                        <label for="disadvantages" class="block text-sm font-medium text-gray-300">Wady</label>
+                        <textarea name="disadvantages" id="disadvantages" rows="3" class="mt-1 block w-full border-gray-600 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-700 text-white py-2 px-3" placeholder="Wymień wady">{{ $exercise->disadvantages }}</textarea>
+                    </div>
                     <div class="col-span-1">
                         <label for="image_path" class="block text-sm font-medium text-gray-300">Wybierz obraz</label>
                         <div class="relative">
