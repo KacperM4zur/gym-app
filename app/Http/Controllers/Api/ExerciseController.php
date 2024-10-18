@@ -11,4 +11,11 @@ class ExerciseController extends Controller
         $exercises = Exercise::where('status', '=', '1')->get()->toArray();
         return response()->json($exercises);
     }
+
+    public function getExercisesByGroup($groupId){
+        $exercises = Exercise::where('exercises_group_id', '=', $groupId)
+            ->where('status', '=', '1')
+            ->get()->toArray();
+        return response()->json($exercises);
+    }
 }

@@ -27,6 +27,14 @@
                         <label for="description" class="block text-sm font-medium text-gray-300">Opis</label>
                         <textarea name="description" id="description" rows="3" class="mt-1 block w-full border-gray-600 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-700 text-white py-2 px-3" placeholder="Wprowadź opis" required>{{ $supplement->description }}</textarea>
                     </div>
+                    <div class="form-group sm:col-span-2">
+                        <label for="advantages" class="block text-sm font-medium text-gray-300">Zalety</label>
+                        <textarea name="advantages" id="advantages" rows="3" class="mt-1 block w-full border-gray-600 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-700 text-white py-2 px-3" placeholder="Wprowadź zalety">{{ $supplement->advantages }}</textarea>
+                    </div>
+                    <div class="form-group sm:col-span-2">
+                        <label for="disadvantages" class="block text-sm font-medium text-gray-300">Wady</label>
+                        <textarea name="disadvantages" id="disadvantages" rows="3" class="mt-1 block w-full border-gray-600 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-700 text-white py-2 px-3" placeholder="Wprowadź wady">{{ $supplement->disadvantages }}</textarea>
+                    </div>
                     <div class="form-group">
                         <label for="image_path" class="block text-sm font-medium text-gray-300">Wybierz obraz</label>
                         <input type="file" name="image_path" id="image_path" class="mt-1 block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">

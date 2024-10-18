@@ -10,4 +10,11 @@ class SupplementController extends Controller
         $supplements = Supplement::where('status', '=', '1')->get()->toArray();
         return response()->json($supplements);
     }
+
+    public function getSupplementsByGroup($groupId){
+        $supplements = Supplement::where('supplements_group_id', '=', $groupId)
+            ->where('status', '=', '1')
+            ->get()->toArray();
+        return response()->json($supplements);
+    }
 }

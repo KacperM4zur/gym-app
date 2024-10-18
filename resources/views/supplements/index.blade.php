@@ -14,6 +14,8 @@
             <tr>
                 <th class="py-2 px-4 border-b">Nazwa</th>
                 <th class="py-2 px-4 border-b">Opis</th>
+                <th class="py-2 px-4 border-b">Zalety</th>
+                <th class="py-2 px-4 border-b">Wady</th>
                 <th class="py-2 px-4 border-b">Grupa</th>
                 <th class="py-2 px-4 border-b">Zdjęcie</th>
                 <th class="py-2 px-4 border-b">Status</th>
@@ -27,6 +29,8 @@
                 <tr>
                     <td class="py-2 px-4 border-b">{{ $supplement->name }}</td>
                     <td class="py-2 px-4 border-b">{{ $supplement->description }}</td>
+                    <td class="py-2 px-4 border-b">{{ $supplement->advantages }}</td>
+                    <td class="py-2 px-4 border-b">{{ $supplement->disadvantages }}</td>
                     <td class="py-2 px-4 border-b">{{ $supplement->supplementsGroup->name }}</td>
                     <td class="py-2 px-4 border-b"><img src="{{ asset("storage/public/$supplement->image_path") }}" alt="{{ $supplement->name }}" class="w-16 h-16"></td>
                     <td class="py-2 px-4 border-b">{{ $supplement->status == 1 ? 'Aktywny' : 'Nieaktywny'}}</td>
