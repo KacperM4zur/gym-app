@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             DaysSeeder::class,
+            ExercisesGroupSeeder::class,
+            ExercisesSeeder::class,
+            SupplementsGroupSeeder::class
         ]);
     }
 }
