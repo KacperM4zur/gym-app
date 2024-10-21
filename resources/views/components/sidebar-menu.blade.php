@@ -133,6 +133,30 @@
                         <p>Profile</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('body-parts.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Partie ciała</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('users-weight.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Waga użytkowników</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('user-measurements.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Pomiary użytkowników</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('user-max-lifts.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Rekordy użytkowników</p>
+                    </a>
+                </li>
 {{--                <li class="nav-item">--}}
 {{--                    <a href="pages/tables/jsgrid.html" class="nav-link">--}}
 {{--                        <i class="far fa-circle nav-icon"></i>--}}

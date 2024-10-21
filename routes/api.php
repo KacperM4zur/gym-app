@@ -15,6 +15,13 @@ Route::get('/supplements/group/{groupId}', [SupplementController::class, 'getSup
 
 Route::get('/supplements-group', [SupplementsGroupController::class, 'getterSupplementsGroup']);
 
+
+
+Route::get('/body-parts', [BodyPartsController::class, 'getterBodyParts']);
+
+
+
+
 Route::post('/register', [CustomerController::class, 'register']);
 Route::post('/login', [CustomerController::class, 'login']);
 
@@ -32,4 +39,28 @@ Route::prefix('customer-profiles')->group(function () {
     Route::get('/{id}', [CustomerProfileController::class, 'show']);
     Route::put('/{id}', [CustomerProfileController::class, 'update']);
     Route::delete('/{id}', [CustomerProfileController::class, 'delete']);
+});
+
+Route::prefix('user-weights')->group(function () {
+    Route::get('/', [UserWeightController::class, 'index']);
+    Route::get('/{id}', [UserWeightController::class, 'show']);
+    Route::post('/', [UserWeightController::class, 'store']);
+    Route::put('/{id}', [UserWeightController::class, 'update']);
+    Route::delete('/{id}', [UserWeightController::class, 'destroy']);
+});
+
+Route::prefix('user-measurements')->group(function () {
+    Route::get('/', [UserMeasurementController::class, 'index']);
+    Route::get('/{id}', [UserMeasurementController::class, 'show']);
+    Route::post('/', [UserMeasurementController::class, 'store']);
+    Route::put('/{id}', [UserMeasurementController::class, 'update']);
+    Route::delete('/{id}', [UserMeasurementController::class, 'destroy']);
+});
+
+Route::prefix('user-max-lifts')->group(function () {
+    Route::get('/', [UserMaxLiftController::class, 'index']);
+    Route::get('/{id}', [UserMaxLiftController::class, 'show']);
+    Route::post('/', [UserMaxLiftController::class, 'store']);
+    Route::put('/{id}', [UserMaxLiftController::class, 'update']);
+    Route::delete('/{id}', [UserMaxLiftController::class, 'destroy']);
 });

@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use UserMeasurementsSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,7 +17,10 @@ class DatabaseSeeder extends Seeder
             DaysSeeder::class,
             ExercisesGroupSeeder::class,
             ExercisesSeeder::class,
-            SupplementsGroupSeeder::class
+            SupplementsGroupSeeder::class,
+            BodyPartsSeeder::class,
+            UserWeightSeeder::class,
+            UserMeasurementsSeeder::class
         ]);
     }
 }

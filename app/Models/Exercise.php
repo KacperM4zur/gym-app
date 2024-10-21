@@ -26,4 +26,8 @@ class Exercise extends Model
     {
         return $this->belongsTo(ExercisesGroup::class, 'exercises_group_id', 'id');
     }
+    public function maxLifts()
+    {
+        return $this->hasMany(UserMaxLift::class, 'exercise_id');
+    }
 }

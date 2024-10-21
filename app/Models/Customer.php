@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Customer extends User
@@ -30,9 +32,24 @@ class Customer extends User
         return $this->api_token;
     }
 
-    public function role()
+    public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id','id');
+    }
+
+    public function weights(): HasMany
+    {
+        return $this->hasMany(UserWeight::class);
+    }
+
+    public function measurements(): HasMany
+    {
+        return $this->hasMany(UserMeasurement::class);
+    }
+
+    public function maxLifts(): HasMany
+    {
+        return $this->hasMany(UserMaxLift::class, 'customer_id');
     }
 
 }

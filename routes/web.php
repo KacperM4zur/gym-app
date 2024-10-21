@@ -74,6 +74,34 @@ Route::middleware('auth')->group(function () {
             Route::match(['get', 'post'], '/edit/{id?}', [DayController::class, 'edit'])->name('edit');
             Route::delete('/delete/{id}', [DayController::class, 'delete'])->name('delete');
         });
+    Route::name('body-parts.')
+        ->prefix('body-parts')
+        ->group(function () {
+            Route::get('/', [BodyPartController::class, 'index'])->name('index');
+            Route::match(['get', 'post'], '/edit/{id?}', [BodyPartController::class, 'edit'])->name('edit');
+            Route::delete('/delete/{id}', [BodyPartController::class, 'delete'])->name('delete');
+        });
+    Route::name('users-weight.')
+        ->prefix('users-weight')
+        ->group(function (){
+            Route::get('/', [UserWeightController::class, 'index'])->name('index');
+            Route::match(['get', 'post'],'/edit/{id?}', [UserWeightController::class, 'edit'])->name('edit');
+            Route::delete('/delete/{id}', [UserWeightController::class, 'delete'])->name('delete');
+        });
+    Route::name('user-measurements.')
+        ->prefix('user-measurements')
+        ->group(function () {
+            Route::get('/', [UserMeasurementController::class, 'index'])->name('index');
+            Route::match(['get', 'post'], '/edit/{id?}', [UserMeasurementController::class, 'edit'])->name('edit');
+            Route::delete('/delete/{id}', [UserMeasurementController::class, 'delete'])->name('delete');
+        });
+    Route::name('user-max-lifts.')
+        ->prefix('user-max-lifts')
+        ->group(function () {
+            Route::get('/', [UserMaxLiftController::class, 'index'])->name('index');
+            Route::match(['get', 'post'], '/edit/{id?}', [UserMaxLiftController::class, 'edit'])->name('edit');
+            Route::delete('/delete/{id}', [UserMaxLiftController::class, 'delete'])->name('delete');
+        });
     Route::name('workout-plans.')
         ->prefix('workout-plans')
         ->group(function () {

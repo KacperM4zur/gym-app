@@ -83,23 +83,27 @@
 <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function (){
+    document.addEventListener('DOMContentLoaded', function () {
         @foreach(['success', 'error', 'warning', 'info'] as $alert)
-            @if(session()->has($alert))
-                @foreach(session()->get($alert, []) as $message)
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "{{ $alert }}",
-                        title: "{{ $message }}",
-                        showConfirmButton: false,
-                        timer: 1500,
-                        // toast: true
-                    });
-                @endforeach
-            @endif
+        @if(session()->has($alert))
+        @php
+            $messages = session()->get($alert);
+            $messages = is_array($messages) ? $messages : [$messages];  // Sprawdzamy czy $messages jest tablicą
+        @endphp
+        @foreach($messages as $message)
+        Swal.fire({
+            position: "top-end",
+            icon: "{{ $alert }}",
+            title: "{{ $message }}",
+            showConfirmButton: false,
+            timer: 3000
+        });
         @endforeach
-    })
+        @endif
+        @endforeach
+    });
 </script>
+
 
 </body>
 </html>
