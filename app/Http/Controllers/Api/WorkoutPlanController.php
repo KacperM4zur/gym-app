@@ -10,7 +10,7 @@ class WorkoutPlanController extends Controller
     public function createWorkoutPlan(WorkoutPlanService $service)
     {
         $workoutPlanData = request()->get('workoutPlan', []);
-        $customer = Customer::find(2);
+        $customer = Customer::find(2); // tu jest na sztywno drugi ziomo
 
         try {
             $data = $service->createWorkoutPlan($workoutPlanData, $customer);

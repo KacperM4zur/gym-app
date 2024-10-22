@@ -42,6 +42,12 @@ Route::prefix('/posts')->group(function () {
     Route::post('/{id}/comments', [CommentController::class, 'store']);
 });
 
+Route::prefix('advice')->group(function () {
+    Route::get('/{customerId}', [AdviceController::class, 'index']);
+    Route::post('/', [AdviceController::class, 'store']);
+    Route::put('/{id}', [AdviceController::class, 'update']);
+    Route::delete('/{id}', [AdviceController::class, 'delete']);
+});
 
 Route::prefix('customer-profiles')->group(function () {
     Route::get('/', [CustomerProfileController::class, 'get']);

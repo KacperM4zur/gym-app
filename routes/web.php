@@ -118,8 +118,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [CustomerProfileController::class, 'index'])->name('profiles.index');
         Route::get('/{id}', [CustomerProfileController::class, 'show'])->name('profiles.show');
     });
-
-
+    Route::name('advices.')
+        ->prefix('advices')
+        ->group(function () {
+            Route::get('/', [AdviceController::class, 'index'])->name('index');
+            Route::match(['get', 'post'], '/edit/{id?}', [AdviceController::class, 'edit'])->name('edit');
+            Route::delete('/delete/{id}', [AdviceController::class, 'delete'])->name('delete');
+        });
 });
 
 Route::middleware('guest')->group(function () {

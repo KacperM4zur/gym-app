@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             SupplementsGroupSeeder::class,
             BodyPartsSeeder::class,
             UserWeightSeeder::class,
-            UserMeasurementsSeeder::class
+            UserMeasurementsSeeder::class,
+            AdvicesSeeder::class
         ]);
     }
 }
