@@ -52,4 +52,10 @@ class Customer extends User
         return $this->hasMany(UserMaxLift::class, 'customer_id');
     }
 
+    public function workoutPlans(): HasMany
+    {
+        return $this->hasMany(WorkoutPlan::class);
+    }
+
+
 }
