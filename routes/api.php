@@ -33,6 +33,12 @@ Route::get('/days', [DayController::class, 'getDays']);
 Route::get('/days', [DayController::class, 'getDays']);
 
 
+Route::prefix('messages')->group(function () {
+    Route::get('/{senderId}/{receiverId}', [MessageController::class, 'getMessages']);
+    Route::post('/send', [MessageController::class, 'sendMessage']);
+});
+
+
 Route::prefix('/posts')->group(function () {
     Route::get('/', [PostController::class, 'get']);
     Route::post('/', [PostController::class, 'store']);
