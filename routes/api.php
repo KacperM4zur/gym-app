@@ -33,6 +33,16 @@ Route::get('/days', [DayController::class, 'getDays']);
 Route::get('/days', [DayController::class, 'getDays']);
 
 
+Route::prefix('/posts')->group(function () {
+    Route::get('/', [PostController::class, 'get']);
+    Route::post('/', [PostController::class, 'store']);
+    Route::get('/{id}', [PostController::class, 'show']);
+    Route::put('/{id}', [PostController::class, 'update']);
+    Route::delete('/{id}', [PostController::class, 'delete']);
+    Route::post('/{id}/comments', [CommentController::class, 'store']);
+});
+
+
 Route::prefix('customer-profiles')->group(function () {
     Route::get('/', [CustomerProfileController::class, 'get']);
     Route::post('/', [CustomerProfileController::class, 'store']);
