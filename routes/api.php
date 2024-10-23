@@ -17,7 +17,10 @@ Route::get('/supplements-group', [SupplementsGroupController::class, 'getterSupp
 
 
 
-Route::get('/body-parts', [BodyPartsController::class, 'getterBodyParts']);
+//Route::get('/body-parts', [BodyPartsController::class, 'getterBodyParts']);
+//Testowanie autoryzcacji
+Route::middleware('auth:api')->get('/body-parts', [BodyPartsController::class, 'getterBodyParts']);
+
 
 
 
@@ -33,7 +36,7 @@ Route::get('/days', [DayController::class, 'getDays']);
 Route::get('/days', [DayController::class, 'getDays']);
 
 
-Route::prefix('messages')->group(function () {
+Route::prefix('contact_messages')->group(function () {
     Route::get('/{senderId}/{receiverId}', [MessageController::class, 'getMessages']);
     Route::post('/send', [MessageController::class, 'sendMessage']);
 });
