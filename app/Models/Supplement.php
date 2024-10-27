@@ -26,4 +26,10 @@ class Supplement extends Model
     {
         return $this->belongsTo(SupplementsGroup::class);
     }
+
+    public function supplementDetails()
+    {
+        return $this->hasMany(SupplementDetail::class);
+    }
+
 }

@@ -108,6 +108,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [WorkoutPlanController::class, 'index'])->name('index');
             Route::get('/{id}', [WorkoutPlanController::class, 'show'])->name('show');
         });
+
+    Route::name('supplement-plans.')
+        ->prefix('supplement-plans')
+        ->group(function () {
+            Route::get('/', [SupplementPlanController::class, 'index'])->name('index');
+            Route::get('/{id}', [SupplementPlanController::class, 'show'])->name('show');
+        });
+
     Route::name('posts.')
         ->prefix('posts')
         ->group(function () {
@@ -125,6 +133,18 @@ Route::middleware('auth')->group(function () {
             Route::match(['get', 'post'], '/edit/{id?}', [AdviceController::class, 'edit'])->name('edit');
             Route::delete('/delete/{id}', [AdviceController::class, 'delete'])->name('delete');
         });
+
+    Route::name('contact-messages.')
+        ->prefix('contact-messages')
+        ->group(function () {
+            Route::get('/', [ContactMessageController::class, 'index'])->name('index');
+            Route::match(['get', 'post'], '/reply/{id?}', [ContactMessageController::class, 'reply'])->name('reply');
+            Route::delete('/delete/{id}', [ContactMessageController::class, 'destroy'])->name('delete');
+            Route::post('/send-reply/{id}', [ContactMessageController::class, 'sendReply'])->name('sendReply');
+        });
+
+
+
 });
 
 Route::middleware('guest')->group(function () {

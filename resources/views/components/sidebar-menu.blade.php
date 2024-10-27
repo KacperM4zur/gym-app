@@ -122,6 +122,19 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('advices.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Porady</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('supplement-plans.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Plany suplementacyjne</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('posts.index') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Posty</p>
@@ -184,7 +197,7 @@
 {{--            </a>--}}
 {{--        </li>--}}
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('contact-messages.index') }}" class="nav-link">
                 <i class="nav-icon far fa-envelope"></i>
                 <p>
                     Mailbox

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\ContactMessageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/exercises-group', [ExercisesGroupController::class, 'getterExercisesGroup']);
@@ -22,7 +23,7 @@ Route::get('/supplements-group', [SupplementsGroupController::class, 'getterSupp
 Route::middleware('auth:api')->get('/body-parts', [BodyPartsController::class, 'getterBodyParts']);
 
 
-
+Route::post('/contact-messages', [ContactMessageController::class, 'store']);
 
 
 Route::post('/register', [CustomerController::class, 'register']);
@@ -30,6 +31,10 @@ Route::post('/login', [CustomerController::class, 'login']);
 
 Route::post('/create-workout-plan', [WorkoutPlanController::class, 'createWorkoutPlan']);
 Route::get('/workout-plans', [WorkoutPlanController::class, 'getWorkoutPlan']);
+
+Route::post('/create-supplement-plan', [SupplementPlanController::class, 'createSupplementPlan']);
+Route::get('/supplement-plans', [SupplementPlanController::class, 'getSupplementPlan']);
+
 
 Route::get('/days', [DayController::class, 'getDays']);
 
