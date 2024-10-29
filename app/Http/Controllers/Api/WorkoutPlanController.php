@@ -90,4 +90,24 @@ class WorkoutPlanController extends Controller
             'data' => $data->toArray()
         ]);
     }
+
+    public function getUserWorkoutPlans(WorkoutPlanService $service)
+    {
+        try {
+            // Pobranie zalogowanego użytkownika
+            $customer = auth()->user();
+
+            // Pobranie wszystkich planów treningowych dla użytkownika
+            $plans = $service->getWorkoutPlansForCustomer($customer);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Plany treningowe pobrane pomyślnie',
+                'data' => $plans->toArray()
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), 400);
+        }
+    }
+
 }

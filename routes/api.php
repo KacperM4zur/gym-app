@@ -35,11 +35,12 @@ Route::post('/login', [CustomerController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
     Route::post('/create-workout-plan', [WorkoutPlanController::class, 'createWorkoutPlan']);
     Route::get('/workout-plans', [WorkoutPlanController::class, 'getWorkoutPlan']);
+    Route::post('/create-supplement-plan', [SupplementPlanController::class, 'createSupplementPlan']);
+    Route::get('/supplement-plans', [SupplementPlanController::class, 'getSupplementPlan']);
+    Route::get('/user-supplement-plans', [SupplementPlanController::class, 'getUserSupplementPlans']);
+    Route::delete('/delete-supplement-plan/{id}', [SupplementPlanController::class, 'deleteSupplementPlan']);
+    Route::get('/user-workout-plans', [WorkoutPlanController::class, 'getUserWorkoutPlans']);
 });
-
-
-Route::post('/create-supplement-plan', [SupplementPlanController::class, 'createSupplementPlan']);
-Route::get('/supplement-plans', [SupplementPlanController::class, 'getSupplementPlan']);
 
 
 Route::get('/days', [DayController::class, 'getDays']);

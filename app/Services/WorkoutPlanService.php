@@ -47,4 +47,25 @@ class WorkoutPlanService
                 ])->toArray()
             ]);
     }
+
+    public function getWorkoutPlansForCustomer(Customer $customer): Collection
+    {
+        return WorkoutPlan::with(['workoutDays.workoutExercises']) // Eager loading dla dni i ćwiczeń
+        ->where('customer_id', $customer->id)
+            ->get()
+            ->map(fn($workoutPlan) => [
+                'name' => $workoutPlan->name,
+                'plan' => $workoutPlan->workoutDays->map(fn($workoutDay) => [
+                    'day' => $workoutDay->day->name,
+                    'exercises' => $workoutDay->workoutExercises->map(fn($exercise) => [
+                        'name' => $exercise->exercise->name,
+                        'sets' => $exercise->sets,
+                        'reps' => $exercise->reps,
+                        'weight' => $exercise->weight,
+                        'break' => $exercise->break
+                    ])->toArray()
+                ])->toArray()
+            ]);
+    }
+
 }

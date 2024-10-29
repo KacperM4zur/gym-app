@@ -21,4 +21,17 @@ class SupplementPlan extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Cascade delete dla powiązanych dni planu suplementacyjnego
+        static::deleting(function ($supplementPlan) {
+            $supplementPlan->supplementPlanDays()->each(function ($day) {
+                $day->supplementDetails()->delete(); // Usuń szczegóły suplementacji
+                $day->delete(); // Usuń dzień planu
+            });
+        });
+    }
 }

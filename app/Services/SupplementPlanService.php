@@ -62,4 +62,40 @@ class SupplementPlanService
                 ])->toArray()
             ]);
     }
+
+    public function getSupplementPlansForCustomer(Customer $customer): Collection
+    {
+        return SupplementPlan::with(['supplementPlanDays.supplementDetails'])
+            ->where('customer_id', $customer->id) // Tylko plany dla zalogowanego użytkownika
+            ->get()
+            ->map(fn($supplementPlan) => [
+                'name' => $supplementPlan->name,
+                'plan' => $supplementPlan->supplementPlanDays->map(fn($day) => [
+                    'day' => $day->day->name,
+                    'supplements' => $day->supplementDetails->map(fn($detail) => [
+                        'name' => $detail->supplement->name,
+                        'amount' => $detail->amount,
+                        'unit' => $detail->unit,
+                    ])->toArray()
+                ])->toArray()
+            ]);
+    }
+
+    public function deleteSupplementPlan(int $id, $customer): bool
+    {
+        // Znalezienie planu suplementacyjnego
+        $supplementPlan = SupplementPlan::find($id);
+
+        if (!$supplementPlan) {
+            throw new \Exception('Plan suplementacyjny nie został znaleziony', 404);
+        }
+
+        // Sprawdzenie, czy plan należy do zalogowanego użytkownika
+        if ($supplementPlan->customer_id !== $customer->id) {
+            throw new \Exception('Brak dostępu do tego planu', 403);
+        }
+
+        // Usunięcie planu wraz z powiązanymi rekordami
+        return $supplementPlan->delete();
+    }
 }
