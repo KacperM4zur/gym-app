@@ -7,17 +7,22 @@ use Illuminate\Http\Request;
 
 class SupplementPlanController extends Controller
 {
-    // Wyświetlanie listy planów suplementacyjnych
-    public function index()
-    {
-        $supplementPlans = SupplementPlan::all();
-        return view('supplement_plans.index', compact('supplementPlans'));
+    public function index() {
+        return view('supplement_plans.index', [
+            'supplementPlans' => SupplementPlan::with('customer')->get()
+        ]);
     }
 
-    // Wyświetlanie szczegółów konkretnego planu suplementacyjnego
-    public function show($id)
-    {
-        $supplementPlan = SupplementPlan::with(['supplementPlanDays.supplementDetails.supplement', 'supplementPlanDays.day'])->findOrFail($id);
-        return view('supplement_plans.show', compact('supplementPlan'));
+    public function show($id) {
+        // Znajdź plan treningowy wraz z powiązanymi dniami i ćwiczeniami
+        $supplementPlan = SupplementPlan::with([
+            'supplementPlanDays.day', // Ładuje dni przypisane do planu
+            'supplementPlanDays.supplementDetails.supplement' // Ładuje ćwiczenia przypisane do każdego dnia
+        ])->findOrFail($id); // Pobiera plan na podstawie ID lub zwraca błąd 404
+
+        // Przekaż dane do widoku 'workout-plan.show'
+        return view('supplement_plans.show', [
+            'supplementPlan' => $supplementPlan
+        ]);
     }
 }
