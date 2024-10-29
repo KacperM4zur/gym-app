@@ -29,8 +29,14 @@ Route::post('/contact-messages', [ContactMessageController::class, 'store']);
 Route::post('/register', [CustomerController::class, 'register']);
 Route::post('/login', [CustomerController::class, 'login']);
 
-Route::post('/create-workout-plan', [WorkoutPlanController::class, 'createWorkoutPlan']);
-Route::get('/workout-plans', [WorkoutPlanController::class, 'getWorkoutPlan']);
+//Route::post('/create-workout-plan', [WorkoutPlanController::class, 'createWorkoutPlan']);
+//Route::get('/workout-plans', [WorkoutPlanController::class, 'getWorkoutPlan']);
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('/create-workout-plan', [WorkoutPlanController::class, 'createWorkoutPlan']);
+    Route::get('/workout-plans', [WorkoutPlanController::class, 'getWorkoutPlan']);
+});
+
 
 Route::post('/create-supplement-plan', [SupplementPlanController::class, 'createSupplementPlan']);
 Route::get('/supplement-plans', [SupplementPlanController::class, 'getSupplementPlan']);

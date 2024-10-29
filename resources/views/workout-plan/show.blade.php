@@ -30,7 +30,7 @@
                         <td class="py-2 px-4 border-b">{{ $exercisePlan->weight ?? 'Brak' }}</td>
                         <td class="py-2 px-4 border-b">{{ $exercisePlan->reps ?? 'Brak' }}</td>
                         <td class="py-2 px-4 border-b">{{ $exercisePlan->sets ?? 'Brak' }}</td>
-                        <td class="py-2 px-4 border-b">{{ $exercisePlan->brak ?? 'Brak' }}</td>
+                        <td class="py-2 px-4 border-b">{{ $exercisePlan->break ?? 'Brak' }}</td>
                     </tr>
                 @endforeach
             @endforeach
