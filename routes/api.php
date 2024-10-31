@@ -18,9 +18,9 @@ Route::get('/supplements-group', [SupplementsGroupController::class, 'getterSupp
 
 
 
-//Route::get('/body-parts', [BodyPartsController::class, 'getterBodyParts']);
+Route::get('/body-parts', [BodyPartsController::class, 'getterBodyParts']);
 //Testowanie autoryzcacji
-Route::middleware('auth:api')->get('/body-parts', [BodyPartsController::class, 'getterBodyParts']);
+//Route::middleware('auth:api')->get('/body-parts', [BodyPartsController::class, 'getterBodyParts']);
 
 
 Route::post('/contact-messages', [ContactMessageController::class, 'store']);
@@ -80,26 +80,20 @@ Route::prefix('customer-profiles')->group(function () {
     Route::delete('/{id}', [CustomerProfileController::class, 'delete']);
 });
 
-Route::prefix('user-weights')->group(function () {
-    Route::get('/', [UserWeightController::class, 'index']);
-    Route::get('/{id}', [UserWeightController::class, 'show']);
-    Route::post('/', [UserWeightController::class, 'store']);
-    Route::put('/{id}', [UserWeightController::class, 'update']);
-    Route::delete('/{id}', [UserWeightController::class, 'destroy']);
+Route::prefix('user-weights')->middleware('auth:api')->group(function () {
+    Route::get('/', [UserWeightController::class, 'index']); // Pobierz historię wag dla zalogowanego użytkownika
+    Route::post('/', [UserWeightController::class, 'store']); // Dodaj nowy wpis wagowy dla zalogowanego użytkownika
 });
 
-Route::prefix('user-measurements')->group(function () {
-    Route::get('/', [UserMeasurementController::class, 'index']);
-    Route::get('/{id}', [UserMeasurementController::class, 'show']);
-    Route::post('/', [UserMeasurementController::class, 'store']);
-    Route::put('/{id}', [UserMeasurementController::class, 'update']);
-    Route::delete('/{id}', [UserMeasurementController::class, 'destroy']);
+
+Route::prefix('user-measurements')->middleware('auth:api')->group(function () {
+    Route::get('/', [UserMeasurementController::class, 'index']); // Pobierz historię pomiarów
+    Route::post('/', [UserMeasurementController::class, 'store']); // Dodaj nowy wpis pomiarowy
 });
 
-Route::prefix('user-max-lifts')->group(function () {
-    Route::get('/', [UserMaxLiftController::class, 'index']);
-    Route::get('/{id}', [UserMaxLiftController::class, 'show']);
-    Route::post('/', [UserMaxLiftController::class, 'store']);
-    Route::put('/{id}', [UserMaxLiftController::class, 'update']);
-    Route::delete('/{id}', [UserMaxLiftController::class, 'destroy']);
+
+Route::prefix('user-max-lifts')->middleware('auth:api')->group(function () {
+    Route::get('/', [UserMaxLiftController::class, 'index']); // Pobiera historię maksymalnych ciężarów
+    Route::post('/', [UserMaxLiftController::class, 'store']); // Dodaje nowy maksymalny ciężar
 });
+
