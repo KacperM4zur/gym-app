@@ -22,4 +22,16 @@ class WorkoutPlan extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id','id');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($workoutPlan) {
+            $workoutPlan->workoutDays->each(function ($day) {
+                $day->workoutExercises()->delete();
+                $day->delete();
+            });
+        });
+    }
 }

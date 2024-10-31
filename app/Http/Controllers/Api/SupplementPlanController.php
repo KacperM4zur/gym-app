@@ -126,25 +126,26 @@ class SupplementPlanController extends Controller
         }
     }
 
-    public function deleteSupplementPlan(SupplementPlanService $service, $id)
+    public function deleteSupplementPlan($id, SupplementPlanService $service)
     {
+        // Pobranie zalogowanego użytkownika
+        $customer = Auth::user();
+
         try {
-            $customer = Auth::user();
-
-            // Sprawdzenie, czy użytkownik jest zalogowany
-            if (!$customer) {
-                return response()->json(['error' => 'Nieautoryzowany użytkownik'], 401);
-            }
-
-            // Usunięcie planu przez serwis
+            // Usunięcie planu suplementacyjnego przez serwis
             $service->deleteSupplementPlan($id, $customer);
-
-            return response()->json(['status' => 'Plan suplementacyjny usunięty pomyślnie'], 200);
-        } catch (\Exception $e) {
-            $statusCode = $e->getCode() === 403 ? 403 : 500;
-            return response()->json(['error' => $e->getMessage()], $statusCode);
+            return response()->json([
+                'status' => 200,
+                'message' => 'Plan suplementacyjny został pomyślnie usunięty'
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'status' => 500,
+                'message' => 'Wystąpił błąd podczas usuwania planu: ' . $exception->getMessage()
+            ], 500);
         }
     }
+
 
 
 }

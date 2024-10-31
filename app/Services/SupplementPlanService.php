@@ -69,6 +69,7 @@ class SupplementPlanService
             ->where('customer_id', $customer->id) // Tylko plany dla zalogowanego użytkownika
             ->get()
             ->map(fn($supplementPlan) => [
+                'id' => $supplementPlan->id,
                 'name' => $supplementPlan->name,
                 'plan' => $supplementPlan->supplementPlanDays->map(fn($day) => [
                     'day' => $day->day->name,
@@ -81,21 +82,16 @@ class SupplementPlanService
             ]);
     }
 
-    public function deleteSupplementPlan(int $id, $customer): bool
+    public function deleteSupplementPlan(int $id, $user): bool
     {
-        // Znalezienie planu suplementacyjnego
-        $supplementPlan = SupplementPlan::find($id);
+        // Wyszukanie planu suplementacyjnego, który należy do zalogowanego użytkownika
+        $supplementPlan = SupplementPlan::where('id', $id)->where('customer_id', $user->id)->first();
 
         if (!$supplementPlan) {
-            throw new \Exception('Plan suplementacyjny nie został znaleziony', 404);
+            throw new \Exception('Plan suplementacyjny nie znaleziony lub brak dostępu');
         }
 
-        // Sprawdzenie, czy plan należy do zalogowanego użytkownika
-        if ($supplementPlan->customer_id !== $customer->id) {
-            throw new \Exception('Brak dostępu do tego planu', 403);
-        }
-
-        // Usunięcie planu wraz z powiązanymi rekordami
+        // Usunięcie planu suplementacyjnego
         return $supplementPlan->delete();
     }
 }

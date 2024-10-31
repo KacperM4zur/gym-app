@@ -110,4 +110,16 @@ class WorkoutPlanController extends Controller
         }
     }
 
+    public function deleteWorkoutPlan($id, WorkoutPlanService $service)
+    {
+        try {
+            $user = Auth::user();
+
+            $service->deleteWorkoutPlan($id, $user);
+
+            return response()->json(['status' => 'Plan treningowy został usunięty pomyślnie'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
+    }
 }

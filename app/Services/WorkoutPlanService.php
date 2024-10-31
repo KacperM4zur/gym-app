@@ -54,6 +54,7 @@ class WorkoutPlanService
         ->where('customer_id', $customer->id)
             ->get()
             ->map(fn($workoutPlan) => [
+                'id' => $workoutPlan->id,
                 'name' => $workoutPlan->name,
                 'plan' => $workoutPlan->workoutDays->map(fn($workoutDay) => [
                     'day' => $workoutDay->day->name,
@@ -66,6 +67,17 @@ class WorkoutPlanService
                     ])->toArray()
                 ])->toArray()
             ]);
+    }
+
+    public function deleteWorkoutPlan(int $id, $user): bool
+    {
+        $workoutPlan = WorkoutPlan::where('id', $id)->where('customer_id', $user->id)->first();
+
+        if (!$workoutPlan) {
+            throw new \Exception('Plan nie znaleziony lub brak dostępu');
+        }
+
+        return $workoutPlan->delete();
     }
 
 }

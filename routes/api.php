@@ -40,6 +40,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/user-supplement-plans', [SupplementPlanController::class, 'getUserSupplementPlans']);
     Route::delete('/delete-supplement-plan/{id}', [SupplementPlanController::class, 'deleteSupplementPlan']);
     Route::get('/user-workout-plans', [WorkoutPlanController::class, 'getUserWorkoutPlans']);
+    Route::delete('/delete-workout-plan/{id}', [WorkoutPlanController::class, 'deleteWorkoutPlan']);
+
 });
 
 
