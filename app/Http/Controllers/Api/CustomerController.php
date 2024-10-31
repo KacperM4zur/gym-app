@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Customer;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -88,4 +89,13 @@ class CustomerController extends Controller
         }
         return null;
     }
+
+    public function getTrainers()
+    {
+        // Filtruje tylko użytkowników z role_id = 4
+        $trainers = Customer::where('role_id', 4)->get();
+        return response()->json($trainers, 200);
+    }
+
+
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ContactMessageController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/exercises-group', [ExercisesGroupController::class, 'getterExercisesGroup']);
@@ -50,10 +51,22 @@ Route::get('/days', [DayController::class, 'getDays']);
 Route::get('/days', [DayController::class, 'getDays']);
 
 
-Route::prefix('contact_messages')->group(function () {
+Route::prefix('contact_messages')->middleware('auth:api')->group(function () {
     Route::get('/{senderId}/{receiverId}', [MessageController::class, 'getMessages']);
     Route::post('/send', [MessageController::class, 'sendMessage']);
 });
+Route::prefix('customers')->middleware('auth:api')->group(function () {
+    Route::get('/trainers', [CustomerController::class, 'getTrainers']);
+});
+Route::middleware('auth:api')->get('/me', function (Request $request) {
+    return response()->json($request->user());
+});
+
+Route::prefix('advices')->middleware('auth:api')->group(function () {
+    Route::get('/', [AdviceController::class, 'getUserAdvices']);
+
+});
+
 
 
 Route::prefix('/posts')->group(function () {

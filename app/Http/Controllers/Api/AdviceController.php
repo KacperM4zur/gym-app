@@ -27,6 +27,30 @@ class AdviceController extends Controller
         }
     }
 
+    public function getUserAdvices()
+    {
+        try {
+            // Pobiera ID zalogowanego użytkownika
+            $customerId = auth()->id();
+
+            // Pobiera porady dla tego użytkownika
+            $advice = Advice::where('customer_id', $customerId)->get();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'SUCCESS',
+                'data' => $advice
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => 'ERROR',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+
     // Tworzenie nowej porady
     public function store(Request $request)
     {
