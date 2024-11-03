@@ -52,6 +52,9 @@ class Customer extends User
         return $this->hasMany(UserMaxLift::class, 'customer_id');
     }
 
-
+    public function supplementPlans()
+    {
+        return $this->hasMany(SupplementPlan::class, 'customer_id'); // Zakładając, że `customer_id` jest kluczem obcym w tabeli `supplement_plans`
+    }
 
 }

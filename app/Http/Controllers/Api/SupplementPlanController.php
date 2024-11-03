@@ -163,6 +163,31 @@ class SupplementPlanController extends Controller
         }
     }
 
+    public function getActiveSupplementPlan(SupplementPlanService $service)
+    {
+        try {
+            // Pobranie zalogowanego użytkownika
+            $customer = auth()->user();
+
+            // Pobranie aktywnego planu suplementacyjnego dla użytkownika
+            $activePlan = $service->getActiveSupplementPlanForCustomer($customer);
+
+            if (!$activePlan) {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Brak aktywnego planu suplementacyjnego'
+                ]);
+            }
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Aktywny plan suplementacyjny pobrany pomyślnie',
+                'data' => $activePlan->toArray()
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), 400);
+        }
+    }
 
 
 

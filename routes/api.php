@@ -38,9 +38,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/workout-plans', [WorkoutPlanController::class, 'getWorkoutPlan']);
     Route::post('/create-supplement-plan', [SupplementPlanController::class, 'createSupplementPlan']);
     Route::get('/supplement-plans', [SupplementPlanController::class, 'getSupplementPlan']);
-    Route::get('/user-supplement-plans', [SupplementPlanController::class, 'getUserSupplementPlans']);
     Route::delete('/delete-supplement-plan/{id}', [SupplementPlanController::class, 'deleteSupplementPlan']);
-    Route::get('/user-workout-plans', [WorkoutPlanController::class, 'getUserWorkoutPlans']);
     Route::delete('/delete-workout-plan/{id}', [WorkoutPlanController::class, 'deleteWorkoutPlan']);
 
 });
@@ -48,6 +46,10 @@ Route::middleware('auth:api')->group(function () {
 Route::middleware('auth:api')->group(function () {
     Route::patch('/supplement-plans/{id}/activate', [SupplementPlanController::class, 'activate']);
     Route::patch('/workout-plans/{id}/activate', [WorkoutPlanController::class, 'activatePlan']);
+    Route::get('/user-active-supplement-plan', [SupplementPlanController::class, 'getActiveSupplementPlan']);
+    Route::get('/user-active-workout-plan', [WorkoutPlanController::class, 'getActiveWorkoutPlan']);
+    Route::get('/user-workout-plans', [WorkoutPlanController::class, 'getUserWorkoutPlans']);
+    Route::get('/user-supplement-plans', [SupplementPlanController::class, 'getUserSupplementPlans']);
 });
 
 

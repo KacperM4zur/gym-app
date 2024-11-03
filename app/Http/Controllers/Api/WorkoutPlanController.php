@@ -140,4 +140,17 @@ class WorkoutPlanController extends Controller
         }
     }
 
+    public function getActiveWorkoutPlan()
+    {
+        $customer = auth()->user();
+
+        $activePlan = $this->workoutPlanService->getActiveWorkoutPlan($customer->id);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Active workout plan retrieved successfully',
+            'data' => $activePlan,
+        ]);
+    }
+
 }

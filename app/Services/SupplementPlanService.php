@@ -112,5 +112,14 @@ class SupplementPlanService
         return $plan;
     }
 
+    public function getActiveSupplementPlanForCustomer($customer)
+    {
+        return SupplementPlan::where('customer_id', $customer->id)
+            ->where('is_active', true)
+            ->with('supplementPlanDays.supplementDetails.supplement') // Dodaje szczegóły dnia i suplementów
+            ->first();
+    }
+
+
 
 }

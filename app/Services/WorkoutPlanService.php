@@ -97,5 +97,14 @@ class WorkoutPlanService
         return $plan;
     }
 
+    public function getActiveWorkoutPlan($customerId)
+    {
+        return WorkoutPlan::where('customer_id', $customerId)
+            ->where('is_active', true)
+            ->with('workoutDays.workoutExercises.exercise')
+            ->first();
+    }
+
+
 
 }
