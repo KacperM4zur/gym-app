@@ -59,6 +59,13 @@ use Illuminate\Support\Facades\Auth;
 
 class SupplementPlanController extends Controller
 {
+    protected SupplementPlanService $supplementPlanService;
+
+    public function __construct(SupplementPlanService $supplementPlanService)
+    {
+        $this->supplementPlanService = $supplementPlanService;
+    }
+
     public function createSupplementPlan(SupplementPlanService $service)
     {
         // Pobranie danych planu suplementacyjnego z requesta
@@ -145,6 +152,17 @@ class SupplementPlanController extends Controller
             ], 500);
         }
     }
+
+    public function activate($id)
+    {
+        try {
+            $plan = $this->supplementPlanService->activatePlan($id);
+            return response()->json(['status' => 200, 'message' => 'Plan activated successfully', 'data' => $plan]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 500, 'message' => 'Failed to activate plan', 'error' => $e->getMessage()]);
+        }
+    }
+
 
 
 

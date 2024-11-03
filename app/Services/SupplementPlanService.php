@@ -94,4 +94,23 @@ class SupplementPlanService
         // Usunięcie planu suplementacyjnego
         return $supplementPlan->delete();
     }
+
+    public function activatePlan($id)
+    {
+        // Retrieve the selected plan by ID
+        $plan = SupplementPlan::findOrFail($id);
+
+        // Deactivate all other plans for this user
+        SupplementPlan::where('customer_id', $plan->customer_id)
+            ->where('id', '!=', $plan->id) // Exclude the selected plan from this update
+            ->update(['is_active' => false]);
+
+        // Activate the selected plan
+        $plan->is_active = true;
+        $plan->save();
+
+        return $plan;
+    }
+
+
 }

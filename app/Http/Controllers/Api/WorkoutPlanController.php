@@ -49,6 +49,13 @@ use Illuminate\Support\Facades\Auth;
 
 class WorkoutPlanController extends Controller
 {
+    protected WorkoutPlanService $workoutPlanService;
+
+    public function __construct(WorkoutPlanService $workoutPlanService)
+    {
+        $this->workoutPlanService = $workoutPlanService;
+    }
+
     public function createWorkoutPlan(WorkoutPlanService $service)
     {
         $workoutPlanData = request()->get('workoutPlan', []);
@@ -122,4 +129,15 @@ class WorkoutPlanController extends Controller
             return response()->json(['error' => $e->getMessage()], 404);
         }
     }
+
+    public function activatePlan($id)
+    {
+        try {
+            $activatedPlan = $this->workoutPlanService->activatePlan($id);
+            return response()->json(['status' => 200, 'message' => 'Plan activated successfully', 'data' => $activatedPlan]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 500, 'message' => 'An error occurred while activating the plan']);
+        }
+    }
+
 }

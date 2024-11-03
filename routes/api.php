@@ -45,6 +45,12 @@ Route::middleware('auth:api')->group(function () {
 
 });
 
+Route::middleware('auth:api')->group(function () {
+    Route::patch('/supplement-plans/{id}/activate', [SupplementPlanController::class, 'activate']);
+    Route::patch('/workout-plans/{id}/activate', [WorkoutPlanController::class, 'activatePlan']);
+});
+
+
 
 Route::get('/days', [DayController::class, 'getDays']);
 

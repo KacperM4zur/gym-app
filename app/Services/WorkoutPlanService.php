@@ -80,4 +80,22 @@ class WorkoutPlanService
         return $workoutPlan->delete();
     }
 
+    public function activatePlan($id)
+    {
+        // Retrieve the selected workout plan by ID
+        $plan = WorkoutPlan::findOrFail($id);
+
+        // Deactivate all other workout plans for this user
+        WorkoutPlan::where('customer_id', $plan->customer_id)
+            ->where('id', '!=', $plan->id) // Exclude the selected plan from this update
+            ->update(['is_active' => false]);
+
+        // Activate the selected workout plan
+        $plan->is_active = true;
+        $plan->save();
+
+        return $plan;
+    }
+
+
 }
