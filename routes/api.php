@@ -101,6 +101,14 @@ Route::prefix('customer-profiles')->group(function () {
     Route::delete('/{id}', [CustomerProfileController::class, 'delete']);
 });
 
+Route::middleware('auth:api')->prefix('customer-profile')->group(function () {
+    Route::get('/me', [CustomerProfileController::class, 'getAuthenticatedProfile']);
+    Route::post('/me', [CustomerProfileController::class, 'storeAuthenticatedProfile']);
+    Route::put('/me', [CustomerProfileController::class, 'updateAuthenticatedProfile']);
+    Route::delete('/me', [CustomerProfileController::class, 'deleteAuthenticatedProfile']);
+});
+
+
 Route::prefix('user-weights')->middleware('auth:api')->group(function () {
     Route::get('/', [UserWeightController::class, 'index']); // Pobierz historię wag dla zalogowanego użytkownika
     Route::post('/', [UserWeightController::class, 'store']); // Dodaj nowy wpis wagowy dla zalogowanego użytkownika
