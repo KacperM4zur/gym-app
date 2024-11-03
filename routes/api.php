@@ -68,15 +68,15 @@ Route::prefix('advices')->middleware('auth:api')->group(function () {
 });
 
 
-
-Route::prefix('/posts')->group(function () {
-    Route::get('/', [PostController::class, 'get']);
+Route::prefix('/posts')->middleware('auth:api')->group(function () {
+    Route::get('/', [PostController::class, 'index']);
     Route::post('/', [PostController::class, 'store']);
     Route::get('/{id}', [PostController::class, 'show']);
     Route::put('/{id}', [PostController::class, 'update']);
     Route::delete('/{id}', [PostController::class, 'delete']);
     Route::post('/{id}/comments', [CommentController::class, 'store']);
 });
+
 
 Route::prefix('advice')->group(function () {
     Route::get('/{customerId}', [AdviceController::class, 'index']);

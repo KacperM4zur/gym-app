@@ -4,18 +4,21 @@ namespace App\Services;
 
 use App\Models\Comment;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class CommentService
 {
-    public function storeComment($data, $id): ?Comment
+    public function createComment($postId, array $data)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($postId);
 
-        if (!$post) {
-            return null;
-        }
+        // Create the comment and associate it with the authenticated user
+        $comment = $post->comments()->create([
+            'customer_id' => Auth::id(),
+            'body' => $data['body'],
+        ]);
 
-        $data['post_id'] = $id;
-        return Comment::create($data);
+        // Reload the comment with customer info and return
+        return Comment::with('customer:id,name')->find($comment->id);
     }
 }

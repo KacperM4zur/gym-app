@@ -2,90 +2,57 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\PostStoreRequest;
 use App\Http\Requests\Post\PostUpdateRequest;
-use App\Http\Resources\OnePostResource;
-use App\Http\Resources\PostResource;
 use App\Services\PostService;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
-    private PostService $postService;
+    protected $postService;
 
     public function __construct(PostService $postService)
     {
         $this->postService = $postService;
     }
 
-    public function get()
+    public function index()
     {
-        try {
-            $data = $this->postService->getPosts();
-        } catch (\Exception $exception) {
-            return response()->json($exception->getMessage(), 400);
-        }
-        return response()->json([
-            'status' => 200,
-            'message' => 'SUCCESS',
-            'data' => PostResource::collection($data)
-        ]);
-    }
-
-    public function store(PostStoreRequest $request)
-    {
-        try {
-            $data = $this->postService->createPost($request->toArray());
-        } catch (\Exception $exception) {
-            return response()->json($exception->getMessage(), 400);
-        }
-        return response()->json([
-            'status' => 200,
-            'message' => 'SUCCESS',
-            'data' => $data->toArray()
-        ]);
+        $posts = $this->postService->getAllPosts();
+        return response()->json(['status' => 200, 'message' => 'SUCCESS', 'data' => $posts]);
     }
 
     public function show($id)
     {
-        try {
-            $data = $this->postService->showPost($id);
-        } catch (\Exception $exception) {
-            return response()->json($exception->getMessage(), 400);
-        }
-        return response()->json([
-            'status' => 200,
-            'message' => 'SUCCESS',
-//            'data' => $data
-            'data' => new OnePostResource($data)
+        $post = $this->postService->getPostById($id);
+        return response()->json(['status' => 200, 'message' => 'SUCCESS', 'data' => $post]);
+    }
 
-        ]);
+    public function store(PostStoreRequest $request)
+    {
+        $post = $this->postService->createPost($request->validated());
+        return response()->json(['status' => 200, 'message' => 'SUCCESS', 'data' => $post]);
     }
 
     public function update(PostUpdateRequest $request, $id)
     {
         try {
-            $data = $this->postService->updatePost($request->toArray(), $id);
-        } catch (\Exception $exception) {
-            return response()->json($exception->getMessage(), 400);
+            $post = $this->postService->updatePost($id, $request->validated());
+            return response()->json(['status' => 200, 'message' => 'SUCCESS', 'data' => $post]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => Response::HTTP_FORBIDDEN, 'message' => 'Unauthorized'], Response::HTTP_FORBIDDEN);
         }
-        return response()->json([
-            'status' => 200,
-            'message' => 'SUCCESS',
-            'data' => $data
-        ]);
     }
 
     public function delete($id)
     {
         try {
-            $data = $this->postService->deletePost($id);
-        } catch (\Exception $exception) {
-            return response()->json($exception->getMessage(), 400);
+            $this->postService->deletePost($id);
+            return response()->json(['status' => 200, 'message' => 'Post deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => Response::HTTP_FORBIDDEN, 'message' => 'Unauthorized'], Response::HTTP_FORBIDDEN);
         }
-        return response()->json([
-            'status' => 200,
-            'message' => 'SUCCESS',
-            'data' => $data
-        ]);
     }
 }

@@ -10,8 +10,7 @@ class PostStoreRequest extends FormRequest
     {
         return [
             'title' => ['required', 'unique:posts,title', 'max:255'],
-            'body' => ['required'],
-            'customer_id' => ['required'],
+            'body' => ['required']
         ];
     }
 }
