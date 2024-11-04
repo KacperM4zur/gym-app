@@ -126,3 +126,12 @@ Route::prefix('user-max-lifts')->middleware('auth:api')->group(function () {
     Route::post('/', [UserMaxLiftController::class, 'store']); // Dodaje nowy maksymalny ciężar
 });
 
+Route::middleware('auth:api')->prefix('clients')->group(function () {
+    Route::get('/', [CustomerController::class, 'getClients']);
+    Route::get('/{id}/profile', [CustomerProfileController::class, 'getProfile']);
+    Route::get('/{customerId}/active-supplement-plan', [SupplementPlanController::class, 'getActiveSupplementPlanForClient']);
+    Route::get('/{customerId}/active-workout-plan', [WorkoutPlanController::class, 'getActiveWorkoutPlanForClient']);
+    Route::get('/{trainerId}/{clientId}/messages', [MessageController::class, 'getConversationMessages']);
+    Route::post('/{trainerId}/messages/send', [MessageController::class, 'sendTrainerMessage']);
+});
+

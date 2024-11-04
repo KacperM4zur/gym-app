@@ -97,5 +97,13 @@ class CustomerController extends Controller
         return response()->json($trainers, 200);
     }
 
+    public function getClients()
+    {
+        // Filtruje tylko użytkowników z role_id innym niż 4
+        $clients = Customer::where('role_id', '!=', 4)->get();
+        return response()->json($clients, 200);
+    }
+
+
 
 }

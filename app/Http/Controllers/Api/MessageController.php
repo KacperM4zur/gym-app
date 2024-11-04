@@ -49,4 +49,44 @@ class MessageController extends Controller
         return response()->json($message);
     }
 
+    public function getConversationMessages($trainerId, $clientId, Request $request)
+    {
+        $user = $request->user(); // Get the currently authenticated user
+
+        // Check if the authenticated user is part of the conversation
+        if ($user->id != $trainerId && $user->id != $clientId) {
+            return response()->json(['message' => 'You do not have access to this conversation'], 403);
+        }
+
+        $messages = Message::where(function ($query) use ($trainerId, $clientId) {
+            $query->where('sender_id', $trainerId)
+                ->where('receiver_id', $clientId);
+        })->orWhere(function ($query) use ($trainerId, $clientId) {
+            $query->where('sender_id', $clientId)
+                ->where('receiver_id', $trainerId);
+        })->orderBy('created_at', 'asc')->get();
+
+        return response()->json($messages);
+    }
+
+    public function sendTrainerMessage(Request $request)
+    {
+        $user = $request->user(); // Get the currently authenticated user
+
+        $request->validate([
+            'receiver_id' => 'required|exists:customers,id', // Ensure receiver exists in customers table
+            'message' => 'required|string', // Validate that message is a string
+        ]);
+
+        // Create a new message with the authenticated user as the sender
+        $message = Message::create([
+            'sender_id' => $user->id,
+            'receiver_id' => $request->receiver_id,
+            'message' => $request->message,
+        ]);
+
+        return response()->json($message);
+    }
+
+
 }

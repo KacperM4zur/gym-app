@@ -172,4 +172,10 @@ class CustomerProfileController extends Controller
         }
     }
 
+    public function getProfile($id)
+    {
+        $profile = CustomerProfile::where('customer_id', $id)->first();
+        return response()->json(['status' => 200, 'data' => $profile]);
+    }
+
 }

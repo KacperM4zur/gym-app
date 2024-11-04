@@ -120,6 +120,12 @@ class SupplementPlanService
             ->first();
     }
 
-
+    public function getActiveSupplementPlanByCustomer($customerId)
+    {
+        return SupplementPlan::where('customer_id', $customerId)
+            ->where('is_active', 1)
+            ->with('supplementPlanDays.supplementDetails.supplement')
+            ->first();
+    }
 
 }

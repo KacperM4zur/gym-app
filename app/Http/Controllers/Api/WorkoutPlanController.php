@@ -153,4 +153,15 @@ class WorkoutPlanController extends Controller
         ]);
     }
 
+    public function getActiveWorkoutPlanForClient($customerId)
+    {
+        $activePlan = $this->workoutPlanService->getActiveWorkoutPlanByCustomer($customerId);
+
+        if ($activePlan) {
+            return response()->json(['status' => 200, 'data' => $activePlan]);
+        } else {
+            return response()->json(['status' => 404, 'message' => 'Active workout plan not found'], 404);
+        }
+    }
+
 }

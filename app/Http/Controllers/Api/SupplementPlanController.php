@@ -53,6 +53,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Customer;
+use App\Models\WorkoutPlan;
 use App\Services\SupplementPlanService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -186,6 +187,18 @@ class SupplementPlanController extends Controller
             ]);
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 400);
+        }
+    }
+
+    // SupplementPlanController.php
+
+    public function getActiveSupplementPlanForClient($customerId)
+    {
+        $activePlan = $this->supplementPlanService->getActiveSupplementPlanByCustomer($customerId);
+        if ($activePlan) {
+            return response()->json(['status' => 200, 'data' => $activePlan]);
+        } else {
+            return response()->json(['status' => 404, 'message' => 'Active supplement plan not found'], 404);
         }
     }
 
