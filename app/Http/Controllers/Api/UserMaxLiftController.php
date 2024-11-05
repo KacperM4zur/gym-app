@@ -64,4 +64,31 @@ class UserMaxLiftController extends Controller
             'data' => $maxLift->load('exercise:id,name') // Załączenie nazwy ćwiczenia
         ], 201);
     }
+
+    public function getClientMaxLifts($customerId)
+    {
+        $user = auth()->user();
+        if ($user->role_id !== 4) { // Sprawdzamy, czy użytkownik jest trenerem
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $maxLifts = UserMaxLift::where('customer_id', $customerId)
+            ->with('exercise') // Ładujemy nazwę ćwiczenia
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($maxLift) {
+                return [
+                    'id' => $maxLift->id,
+                    'customer_id' => $maxLift->customer_id,
+                    'exercise' => $maxLift->exercise->name, // Pobieramy nazwę ćwiczenia
+                    'weight' => $maxLift->weight,
+                    'date' => $maxLift->date,
+                    'created_at' => $maxLift->created_at,
+                    'updated_at' => $maxLift->updated_at,
+                ];
+            });
+
+        return response()->json(['status' => 200, 'data' => $maxLifts]);
+    }
+
 }

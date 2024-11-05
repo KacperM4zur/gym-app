@@ -124,4 +124,39 @@ class AdviceController extends Controller
             ]);
         }
     }
+
+    public function getClientAdvices($customerId)
+    {
+        $user = auth()->user();
+        if ($user->role_id !== 4) { // Sprawdzamy, czy użytkownik jest trenerem
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $advices = Advice::where('customer_id', $customerId)->get();
+        return response()->json(['status' => 200, 'data' => $advices]);
+    }
+
+    public function createAdvice(Request $request, $customerId)
+    {
+
+        $user = auth()->user();
+        if ($user->role_id !== 4) { // Sprawdzamy, czy użytkownik jest trenerem
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $validatedData = $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $advice = new Advice([
+            'customer_id' => $customerId,
+            'content' => $validatedData['content'],
+        ]);
+
+        $advice->save();
+
+        return response()->json(['status' => 201, 'data' => $advice]);
+    }
+
+
 }

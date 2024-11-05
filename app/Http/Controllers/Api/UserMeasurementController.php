@@ -64,4 +64,32 @@ class UserMeasurementController extends Controller
             'data' => $measurement->load('bodyPart:id,name') // Załączenie nazwy części ciała
         ], 201);
     }
+
+    public function getClientMeasurements($customerId)
+    {
+        $user = auth()->user();
+        if ($user->role_id !== 4) { // Sprawdzamy, czy użytkownik jest trenerem
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $measurements = UserMeasurement::where('customer_id', $customerId)
+            ->with('bodyPart') // Ładujemy nazwę części ciała
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($measurement) {
+                return [
+                    'id' => $measurement->id,
+                    'customer_id' => $measurement->customer_id,
+                    'body_part' => $measurement->bodyPart->name, // Pobieramy nazwę części ciała
+                    'date' => $measurement->date,
+                    'measurement' => $measurement->measurement,
+                    'created_at' => $measurement->created_at,
+                    'updated_at' => $measurement->updated_at,
+                ];
+            });
+
+        return response()->json(['status' => 200, 'data' => $measurements]);
+    }
+
+
 }

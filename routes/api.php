@@ -70,10 +70,7 @@ Route::middleware('auth:api')->get('/me', function (Request $request) {
     return response()->json($request->user());
 });
 
-Route::prefix('advices')->middleware('auth:api')->group(function () {
-    Route::get('/', [AdviceController::class, 'getUserAdvices']);
 
-});
 
 
 Route::prefix('/posts')->middleware('auth:api')->group(function () {
@@ -86,12 +83,7 @@ Route::prefix('/posts')->middleware('auth:api')->group(function () {
 });
 
 
-Route::prefix('advice')->group(function () {
-    Route::get('/{customerId}', [AdviceController::class, 'index']);
-    Route::post('/', [AdviceController::class, 'store']);
-    Route::put('/{id}', [AdviceController::class, 'update']);
-    Route::delete('/{id}', [AdviceController::class, 'delete']);
-});
+
 
 Route::prefix('customer-profiles')->group(function () {
     Route::get('/', [CustomerProfileController::class, 'get']);
@@ -133,5 +125,25 @@ Route::middleware('auth:api')->prefix('clients')->group(function () {
     Route::get('/{customerId}/active-workout-plan', [WorkoutPlanController::class, 'getActiveWorkoutPlanForClient']);
     Route::get('/{trainerId}/{clientId}/messages', [MessageController::class, 'getConversationMessages']);
     Route::post('/{trainerId}/messages/send', [MessageController::class, 'sendTrainerMessage']);
+    Route::get('/{customerId}/weights', [UserWeightController::class, 'getClientWeights']);
+    Route::get('/{customerId}/measurements', [UserMeasurementController::class, 'getClientMeasurements']);
+    Route::get('/{customerId}/max-lifts', [UserMaxLiftController::class, 'getClientMaxLifts']); // Nowy endpoint
+    Route::get('/{customerId}/advices', [AdviceController::class, 'getClientAdvices']); // Pobierz notatki dla klienta
+    Route::post('/{customerId}/advices', [AdviceController::class, 'createAdvice']); // Dodaj nową notatkę dla klienta
+
+
+
+
 });
 
+Route::prefix('advice')->group(function () {
+    Route::get('/{customerId}', [AdviceController::class, 'index']);
+    Route::post('/', [AdviceController::class, 'store']);
+    Route::put('/{id}', [AdviceController::class, 'update']);
+    Route::delete('/{id}', [AdviceController::class, 'delete']);
+});
+
+Route::prefix('advices')->middleware('auth:api')->group(function () {
+    Route::get('/', [AdviceController::class, 'getUserAdvices']);
+
+});

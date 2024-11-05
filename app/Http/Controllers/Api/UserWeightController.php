@@ -60,4 +60,19 @@ class UserWeightController extends Controller
             'data' => $weight
         ], 201);
     }
+
+    public function getClientWeights($customerId)
+    {
+        // Sprawdzenie, czy zalogowany użytkownik jest trenerem (role_id = 4)
+        $user = auth()->user();
+        if ($user->role_id !== 4) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        // Pobranie historii wag dla określonego klienta na podstawie customer_id
+        $weights = UserWeight::where('customer_id', $customerId)->orderBy('created_at', 'desc')->get();
+
+        return response()->json(['status' => 200, 'data' => $weights]);
+    }
+
 }
