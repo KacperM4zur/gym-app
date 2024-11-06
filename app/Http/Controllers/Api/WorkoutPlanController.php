@@ -164,4 +164,46 @@ class WorkoutPlanController extends Controller
         }
     }
 
+    public function getWorkoutPlansForClient(WorkoutPlanService $service, $customerId)
+    {
+        try {
+            // Pobranie wszystkich planów treningowych dla danego klienta
+            $plans = $service->getWorkoutPlansForSpecificCustomer($customerId);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Plany treningowe klienta pobrane pomyślnie',
+                'data' => $plans->toArray()
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), 400);
+        }
+    }
+
+    public function createWorkoutPlanForClient(WorkoutPlanService $service, $customerId)
+    {
+        $workoutPlanData = request()->get('workoutPlan', []);
+
+        // Sprawdzamy, czy zalogowany użytkownik jest trenerem
+        $trainer = Auth::user();
+        if (!$trainer || $trainer->role_id !== 4) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Nieautoryzowany dostęp'
+            ], 401);
+        }
+
+        try {
+            $data = $service->createWorkoutPlanForSpecificCustomer($workoutPlanData, $customerId);
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), 400);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Plan treningowy stworzony pomyślnie dla klienta',
+            'data' => $data->toArray()
+        ]);
+    }
+
 }

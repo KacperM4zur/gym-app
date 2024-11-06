@@ -56,6 +56,7 @@ use App\Models\Customer;
 use App\Models\WorkoutPlan;
 use App\Services\SupplementPlanService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SupplementPlanController extends Controller
@@ -66,7 +67,6 @@ class SupplementPlanController extends Controller
     {
         $this->supplementPlanService = $supplementPlanService;
     }
-
     public function createSupplementPlan(SupplementPlanService $service)
     {
         // Pobranie danych planu suplementacyjnego z requesta
@@ -97,7 +97,6 @@ class SupplementPlanController extends Controller
             'data' => $data->toArray()
         ]);
     }
-
     public function getSupplementPlan(SupplementPlanService $service)
     {
         try {
@@ -153,7 +152,6 @@ class SupplementPlanController extends Controller
             ], 500);
         }
     }
-
     public function activate($id)
     {
         try {
@@ -163,7 +161,6 @@ class SupplementPlanController extends Controller
             return response()->json(['status' => 500, 'message' => 'Failed to activate plan', 'error' => $e->getMessage()]);
         }
     }
-
     public function getActiveSupplementPlan(SupplementPlanService $service)
     {
         try {
@@ -189,9 +186,6 @@ class SupplementPlanController extends Controller
             return response()->json($exception->getMessage(), 400);
         }
     }
-
-    // SupplementPlanController.php
-
     public function getActiveSupplementPlanForClient($customerId)
     {
         $activePlan = $this->supplementPlanService->getActiveSupplementPlanByCustomer($customerId);
@@ -202,6 +196,55 @@ class SupplementPlanController extends Controller
         }
     }
 
+    public function createSupplementPlanForClient($customerId, SupplementPlanService $service)
+    {
+        // Sprawdź, czy zalogowany użytkownik ma rolę trenera
+        $trainer = Auth::user();
+        if (!$trainer || $trainer->role_id != 4) {
+            return response()->json([
+                'status' => 403,
+                'message' => 'Brak uprawnień do tworzenia planu dla klienta.'
+            ], 403);
+        }
 
+        // Pobierz dane planu z requesta
+        $supplementPlanData = request()->get('supplementPlan', []);
+
+        try {
+            // Wywołaj serwis do stworzenia planu suplementacyjnego
+            $data = $service->createSupplementPlanForUser($supplementPlanData, $customerId);
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), 400);
+        }
+
+        // Zwróć odpowiedź z danymi stworzonego planu
+        return response()->json([
+            'status' => 200,
+            'message' => 'Plan suplementacyjny stworzony pomyślnie',
+            'data' => $data->toArray()
+        ]);
+    }
+
+    public function getClientSupplementPlans($customerId, SupplementPlanService $service)
+    {
+        // Sprawdzanie, czy zalogowany użytkownik ma rolę trenera
+        $trainer = auth()->user();
+        if ($trainer->role_id !== 4) {
+            return response()->json(['status' => 403, 'message' => 'Brak dostępu'], 403);
+        }
+
+        try {
+            // Pobieranie planów suplementacyjnych klienta
+            $plans = $service->getSupplementPlansForClientById($customerId);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Plany suplementacyjne klienta pobrane pomyślnie',
+                'data' => $plans->toArray()
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), 400);
+        }
+    }
 
 }

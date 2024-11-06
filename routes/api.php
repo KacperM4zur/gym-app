@@ -130,8 +130,11 @@ Route::middleware('auth:api')->prefix('clients')->group(function () {
     Route::get('/{customerId}/max-lifts', [UserMaxLiftController::class, 'getClientMaxLifts']); // Nowy endpoint
     Route::get('/{customerId}/advices', [AdviceController::class, 'getClientAdvices']); // Pobierz notatki dla klienta
     Route::post('/{customerId}/advices', [AdviceController::class, 'createAdvice']); // Dodaj nową notatkę dla klienta
-
-
+    Route::get('/{customerId}/supplement-plans', [SupplementPlanController::class, 'getSupplementPlansForClient']);
+    Route::post('/{customerId}/supplement-plan', [SupplementPlanController::class, 'createSupplementPlanForClient']);
+    Route::get('/{customerId}/supplement-plans', [SupplementPlanController::class, 'getClientSupplementPlans']);
+    Route::get('/{customerId}/workout-plans', [WorkoutPlanController::class, 'getWorkoutPlansForClient']);
+    Route::post('/{customerId}/workout-plans', [WorkoutPlanController::class, 'createWorkoutPlanForClient']);
 
 
 });

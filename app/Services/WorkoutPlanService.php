@@ -113,4 +113,57 @@ class WorkoutPlanService
             ->first();
     }
 
+    public function getWorkoutPlansForSpecificCustomer(int $customerId): Collection
+    {
+        return WorkoutPlan::with(['workoutDays.workoutExercises']) // Eager loading dla dni i ćwiczeń
+        ->where('customer_id', $customerId)
+            ->get()
+            ->map(fn($workoutPlan) => [
+                'id' => $workoutPlan->id,
+                'name' => $workoutPlan->name,
+                'plan' => $workoutPlan->workoutDays->map(fn($workoutDay) => [
+                    'day' => $workoutDay->day->name,
+                    'exercises' => $workoutDay->workoutExercises->map(fn($exercise) => [
+                        'name' => $exercise->exercise->name,
+                        'sets' => $exercise->sets,
+                        'reps' => $exercise->reps,
+                        'weight' => $exercise->weight,
+                        'break' => $exercise->break
+                    ])->toArray()
+                ])->toArray()
+            ]);
+    }
+
+    public function createWorkoutPlanForSpecificCustomer(array $workoutPlanData, int $customerId): WorkoutPlan
+    {
+        $workoutPlan = WorkoutPlan::create([
+            'name' => $workoutPlanData['workoutPlanName'],
+            'customer_id' => $customerId
+        ]);
+
+        $days = Day::whereIn('number', array_column($workoutPlanData['plan'], 'day_of_week'))->get();
+
+        foreach ($workoutPlanData['plan'] as $plan) {
+            $dayPlan = WorkoutPlanDay::create([
+                'workout_plan_id' => $workoutPlan->id,
+                'day_id' => $days->firstWhere('number', '=', $plan['day_of_week'])->id
+            ]);
+
+            $exercises = array_map(function ($exercise) use ($dayPlan) {
+                return [
+                    'workout_plan_day_id' => $dayPlan->id,
+                    'exercise_id' => $exercise['exercise_id'],
+                    'sets' => $exercise['sets'],
+                    'reps' => $exercise['reps'],
+                    'weight' => $exercise['weight'],
+                    'break' => $exercise['break'],
+                ];
+            }, $plan['exercises']);
+
+            ExercisePlanDay::insert($exercises);
+        }
+
+        return $workoutPlan;
+    }
+
 }

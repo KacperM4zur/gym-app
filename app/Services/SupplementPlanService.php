@@ -128,4 +128,58 @@ class SupplementPlanService
             ->first();
     }
 
+    public function createSupplementPlanForUser(array $supplementPlanData, int $customerId): SupplementPlan
+    {
+        // Utwórz główny plan suplementacyjny dla wybranego klienta
+        $supplementPlan = SupplementPlan::create([
+            'name' => $supplementPlanData['plan_name'],
+            'customer_id' => $customerId,
+        ]);
+
+        // Pobierz dni na podstawie numerów z planu
+        $days = Day::whereIn('number', array_column($supplementPlanData['plan'], 'day_of_week'))->get();
+
+        foreach ($supplementPlanData['plan'] as $plan) {
+            // Utwórz dzień planu suplementacyjnego
+            $dayPlan = SupplementPlanDay::create([
+                'supplement_plan_id' => $supplementPlan->id,
+                'day_id' => $days->firstWhere('number', '=', $plan['day_of_week'])->id
+            ]);
+
+            // Dodaj szczegóły suplementów dla danego dnia
+            $supplements = array_map(function ($supplement) use ($dayPlan) {
+                return [
+                    'supplement_plan_day_id' => $dayPlan->id,
+                    'supplement_id' => $supplement['supplement_id'],
+                    'amount' => $supplement['amount'],
+                    'unit' => $supplement['unit']
+                ];
+            }, $plan['supplements']);
+
+            // Wstaw suplementy jako szczegóły dnia
+            SupplementDetail::insert($supplements);
+        }
+
+        return $supplementPlan;
+    }
+
+    public function getSupplementPlansForClientById($customerId): Collection
+    {
+        return SupplementPlan::with(['supplementPlanDays.supplementDetails'])
+            ->where('customer_id', $customerId)
+            ->get()
+            ->map(fn($supplementPlan) => [
+                'id' => $supplementPlan->id,
+                'name' => $supplementPlan->name,
+                'plan' => $supplementPlan->supplementPlanDays->map(fn($day) => [
+                    'day' => $day->day->name,
+                    'supplements' => $day->supplementDetails->map(fn($detail) => [
+                        'name' => $detail->supplement->name,
+                        'amount' => $detail->amount,
+                        'unit' => $detail->unit,
+                    ])->toArray()
+                ])->toArray()
+            ]);
+    }
+
 }
