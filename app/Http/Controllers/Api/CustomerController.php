@@ -104,6 +104,12 @@ class CustomerController extends Controller
         return response()->json($clients, 200);
     }
 
+    public function getClientCount()
+    {
+        // Liczy użytkowników z role_id innym niż 4
+        $clientCount = Customer::where('role_id', '!=', 4)->count();
+        return response()->json(['count' => $clientCount], 200);
+    }
 
 
 }

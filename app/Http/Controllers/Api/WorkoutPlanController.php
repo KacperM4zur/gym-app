@@ -44,6 +44,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Customer;
+use App\Models\WorkoutPlan;
 use App\Services\WorkoutPlanService;
 use Illuminate\Support\Facades\Auth;
 
@@ -205,5 +206,12 @@ class WorkoutPlanController extends Controller
             'data' => $data->toArray()
         ]);
     }
+
+    public function getWorkoutPlanCount()
+    {
+        $workoutPlanCount = WorkoutPlan::count(); // Zakładam, że masz model WorkoutPlan
+        return response()->json(['count' => $workoutPlanCount], 200);
+    }
+
 
 }

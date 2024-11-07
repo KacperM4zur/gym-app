@@ -53,6 +53,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Customer;
+use App\Models\SupplementPlan;
 use App\Models\WorkoutPlan;
 use App\Services\SupplementPlanService;
 use App\Http\Controllers\Controller;
@@ -245,6 +246,12 @@ class SupplementPlanController extends Controller
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 400);
         }
+    }
+
+    public function getSupplementPlanCount()
+    {
+        $supplementPlanCount = SupplementPlan::count(); // Zakładam, że masz model SupplementPlan
+        return response()->json(['count' => $supplementPlanCount], 200);
     }
 
 }

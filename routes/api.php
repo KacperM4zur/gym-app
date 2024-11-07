@@ -135,6 +135,9 @@ Route::middleware('auth:api')->prefix('clients')->group(function () {
     Route::get('/{customerId}/supplement-plans', [SupplementPlanController::class, 'getClientSupplementPlans']);
     Route::get('/{customerId}/workout-plans', [WorkoutPlanController::class, 'getWorkoutPlansForClient']);
     Route::post('/{customerId}/workout-plans', [WorkoutPlanController::class, 'createWorkoutPlanForClient']);
+    Route::get('/count', [CustomerController::class, 'getClientCount']);
+    Route::get('/workout-plans/count', [WorkoutPlanController::class, 'getWorkoutPlanCount']);
+    Route::get('/supplement-plans/count', [SupplementPlanController::class, 'getSupplementPlanCount']);
 
 
 });
@@ -158,4 +161,10 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/events/{id}', [EventController::class, 'show']);
     Route::put('/events/{id}', [EventController::class, 'update']);
     Route::delete('/events/{id}', [EventController::class, 'destroy']);
+});
+Route::middleware('auth:api')->group(function () {
+    Route::get('/todos', [TodoController::class, 'index']);
+    Route::post('/todos', [TodoController::class, 'store']);
+    Route::put('/todos/{id}', [TodoController::class, 'update']);
+    Route::delete('/todos/{id}', [TodoController::class, 'destroy']);
 });
